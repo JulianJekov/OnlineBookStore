@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore - Book List</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <h1 class="h2">All Books</h1>
+        </div>
+    </header>
+
+    <div th:replace="~{fragments/nav-auth}"></div>
+
+    <main class="container mt-4">
+        <h2 class="text-center">Available Books</h2>
+        <div class="row justify-content-center">
+            <!-- Repeat this block for each book -->
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <img src="/images/352202-admin.jpg" class="card-img-top" alt="Book Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Book Title</h5>
+                        <p class="card-text">Author Name</p>
+                        <a href="book-details.html" class="btn btn-warning">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <img src="/images/book-1283865_1280.jpg" class="card-img-top" alt="Book Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Book Title</h5>
+                        <p class="card-text">Author Name</p>
+                        <a href="book-details.html" class="btn btn-warning">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100">
+                    <img src="/images/book-1283865_1280.jpg" class="card-img-top" alt="Book Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Book Title</h5>
+                        <p class="card-text">Author Name</p>
+                        <a href="book-details.html" class="btn btn-warning">View Details</a>
+                    </div>
+                </div>
+            </div>
+            <!-- End of book block -->
+        </div>
+
+    </main>
+
+   <div th:replace="~{fragments/footer}"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.amazonaws.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

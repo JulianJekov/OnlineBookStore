@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore - Index</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <h1 class="h2">Welcome to Our Bookstore</h1>
+        </div>
+    </header>
+
+   <div th:replace="~{fragments/nav-guest}"></div>
+
+    <main class="my-main">
+        <section class="hero">
+            <div class="container">
+                <h1>Discover Your Next Great Read</h1>
+                <p>Join our community and explore thousands of books.</p>
+            </div>
+
+            <div class="buttons">
+                <a th:href="@{/users/register}" class="btn btn-warning btn-lg">Register</a>
+                <a th:href="@{/users/login}" class="btn btn-warning btn-lg">Login</a>
+            </div>
+        </section>
+        
+      
+    </main>
+
+    <div th:replace="~{fragments/footer}"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
