@@ -24,6 +24,9 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Column(nullable = false)
+    private String imageUrl;
+
     @ManyToMany(mappedBy = "boughtBooks")
     private List<User> boughtBy;
 
@@ -92,6 +95,15 @@ public class Book extends BaseEntity {
 
     public Book setReviews(List<Review> reviews) {
         this.reviews = reviews;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Book setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
         return this;
     }
 }

@@ -1,7 +1,10 @@
 package bg.softuni.Online.Book.Store.model.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,10 +31,7 @@ public class User extends BaseEntity {
     private int age;
 
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "users_roles", joinColumns =
-//    @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns =
-//    @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_books", joinColumns =
@@ -43,11 +43,29 @@ public class User extends BaseEntity {
     private ShoppingCart shoppingCart;
 
     @OneToMany(mappedBy = "user")
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
-//    TODO: ...
-//    private LocalDate lastLoginDate;
+    public LocalDate getLastLoginDate() {
+        return lastLoginDate;
+    }
 
+    public User setLastLoginDate(LocalDate lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+        return this;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public User setActive(boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    private LocalDate lastLoginDate;
+
+    private boolean isActive;
 
     public User() {
     }

@@ -10,58 +10,99 @@
 </head>
 
 <body>
-    <header class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <h1 class="h2">Welcome to The Register Page</h1>
+<header class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <h1 class="h2">Welcome to The Register Page</h1>
+    </div>
+</header>
+
+<div th:replace="~{fragments/navigation}"></div>
+
+<main>
+    <div class="container">
+        <div class="register-form">
+            <h2 class="text-center">Create Your Account</h2>
+            <form
+                    th:method="POST"
+                    th:action="@{/users/register}"
+                    th:object="${userRegisterDTO}"
+            >
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter Username"
+                           th:name="username"
+                           th:field="*{username}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{username}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                           th:name="email"
+                           th:field="*{email}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{email}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"
+                           th:name="firstName"
+                           th:field="*{firstName}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{firstName}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"
+                           th:name="lastName"
+                           th:field="*{lastName}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{lastName}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" placeholder="Age" value=""
+                           th:name="age"
+                           th:field="*{age}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{age}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter Password"
+                           autocomplete="new-password"
+                           th:name="password"
+                           th:field="*{password}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{password}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Enter ConfirmPassword"
+                           autocomplete="new-password"
+                           th:name="confirmPassword"
+                           th:field="*{confirmPassword}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{confirmPassword}" class="invalid-feedback danger"></small>
+                </div>
+                <button type="submit" class="btn btn-warning btn-block">Register</button>
+            </form>
         </div>
-    </header>
+    </div>
+</main>
 
-    <div th:replace="~{fragments/navigation}"></div>
+<div th:replace="~{fragments/footer}"></div>
 
-    <main>
-        <div class="container">
-            <div class="register-form">
-                <h2 class="text-center">Create Your Account</h2>
-                <form>
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" placeholder="Enter Username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" class="form-control" id="age" name="age" placeholder="Age" value="" min="1">
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter Password"required autocomplete="new-password">
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" class="form-control" id="confirmPassword" placeholder="Enter ConfirmPassword"required autocomplete="new-password">
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-block">Register</button>
-                </form>
-            </div>
-        </div>
-    </main>
-
-    <div th:replace="~{fragments/footer}"></div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>
