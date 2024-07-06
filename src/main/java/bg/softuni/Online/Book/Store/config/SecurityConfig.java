@@ -30,7 +30,8 @@ public class SecurityConfig {
                                 authorizeRequest -> {
                                     authorizeRequest
                                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                                            .requestMatchers("/", "/users/register", "/users/login", "/about").permitAll()
+                                            .requestMatchers("/", "/users/register", "/users/login",
+                                                    "/users/login-error", "/about").permitAll()
                                             .anyRequest().authenticated();
                                 }
                         )
@@ -41,8 +42,8 @@ public class SecurityConfig {
                                             .usernameParameter("email")
                                             .passwordParameter("password")
                                             .defaultSuccessUrl("/home", true)
-//                                            .successHandler(customAuthenticationSuccessHandler)
-                                            .failureUrl("/users/login-error");
+                                            .successHandler(customAuthenticationSuccessHandler)
+                                            .failureForwardUrl("/users/login-error");
                                 }
                         )
                         .logout(

@@ -1,5 +1,6 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
+import bg.softuni.Online.Book.Store.constants.Exceptions;
 import bg.softuni.Online.Book.Store.events.UserRegisterEvent;
 import bg.softuni.Online.Book.Store.model.dto.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.model.entity.User;
@@ -9,11 +10,14 @@ import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+
+import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -57,6 +61,12 @@ public class UserServiceImpl implements UserService {
     public void updateUserLastLogin(User user) {
         user.setLastLoginDate(LocalDate.now());
         userRepository.save(user);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException(USER_WITH_EMAIL_NOT_FOUND));
     }
 
     private void encodePassword(UserRegisterDTO userRegisterDTO) {
