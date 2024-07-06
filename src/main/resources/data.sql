@@ -23,3 +23,8 @@ VALUES (1, 2);
 -- user
 INSERT INTO users_roles (`user_id`, `roles_id`)
 VALUES (2, 2);
+
+INSERT INTO shopping_cards (id, user_id)
+VALUES (1, 1);
+INSERT INTO shopping_cards (id, user_id)
+VALUES (2, 2);

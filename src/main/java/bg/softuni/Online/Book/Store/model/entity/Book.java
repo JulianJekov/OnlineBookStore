@@ -3,6 +3,7 @@ package bg.softuni.Online.Book.Store.model.entity;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,10 +29,10 @@ public class Book extends BaseEntity {
     private String imageUrl;
 
     @ManyToMany(mappedBy = "boughtBooks")
-    private List<User> boughtBy;
+    private List<User> boughtBy = new ArrayList<>();
 
     @OneToMany(mappedBy = "book")
-    private List<Review> reviews;
+    private List<Review> reviews = new ArrayList<>();
 
     public Book() {}
 

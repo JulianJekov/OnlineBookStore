@@ -1,4 +1,4 @@
-package bg.softuni.Online.Book.Store.model.dto;
+package bg.softuni.Online.Book.Store.model.dto.user;
 
 import bg.softuni.Online.Book.Store.validations.passwordMatch.PasswordMatch;
 import bg.softuni.Online.Book.Store.validations.uniqueEmail.UniqueEmail;

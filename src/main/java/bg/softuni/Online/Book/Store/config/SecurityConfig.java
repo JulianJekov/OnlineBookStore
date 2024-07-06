@@ -1,5 +1,6 @@
 package bg.softuni.Online.Book.Store.config;
 
+import bg.softuni.Online.Book.Store.model.enums.UserRole;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.impl.BookStoreDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -32,6 +33,8 @@ public class SecurityConfig {
                                             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                             .requestMatchers("/", "/users/register", "/users/login",
                                                     "/users/login-error", "/about").permitAll()
+                                            .requestMatchers("/error").permitAll()
+                                            .requestMatchers("/books/add").hasRole(UserRole.ADMIN.name())
                                             .anyRequest().authenticated();
                                 }
                         )

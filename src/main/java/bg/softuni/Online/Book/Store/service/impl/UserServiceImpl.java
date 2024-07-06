@@ -1,8 +1,7 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
-import bg.softuni.Online.Book.Store.constants.Exceptions;
 import bg.softuni.Online.Book.Store.events.UserRegisterEvent;
-import bg.softuni.Online.Book.Store.model.dto.UserRegisterDTO;
+import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.model.enums.UserRole;
 import bg.softuni.Online.Book.Store.repository.RoleRepository;

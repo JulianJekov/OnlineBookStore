@@ -37,7 +37,9 @@
                     <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/shopping-cart}">Shopping Cart</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/add-book}">Add Book</a>
+                    <a class="nav-link"
+                       sec:authorize="hasRole('ADMIN')"
+                       th:href="@{/books/add}">Add Book</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/users/register}">Register</a>

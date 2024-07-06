@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "shoping_cards")
+@Table(name = "shopping_cards")
 public class ShoppingCart extends BaseEntity{
 
     @OneToOne

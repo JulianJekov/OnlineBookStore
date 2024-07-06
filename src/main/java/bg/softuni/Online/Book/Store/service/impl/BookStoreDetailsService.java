@@ -1,6 +1,5 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
-import bg.softuni.Online.Book.Store.constants.Exceptions;
 import bg.softuni.Online.Book.Store.model.entity.Role;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
@@ -10,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
 import java.util.Set;
+
+import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
 
 public class BookStoreDetailsService implements UserDetailsService {
 
@@ -26,7 +27,8 @@ public class BookStoreDetailsService implements UserDetailsService {
                userRepository
                         .findByEmail(email)
                         .map(this::mapUser)
-                        .orElseThrow(() -> new UsernameNotFoundException(Exceptions.USER_WITH_EMAIL_NOT_FOUND));
+                        .orElseThrow(() ->
+                                new UsernameNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND, email)));
     }
 
     private UserDetails mapUser(User user) {
