@@ -1,11 +1,9 @@
 package bg.softuni.Online.Book.Store.web;
 
-import bg.softuni.Online.Book.Store.model.dto.UserLoginDTO;
 import bg.softuni.Online.Book.Store.model.dto.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,11 +25,6 @@ public class UserController {
     @ModelAttribute("userRegisterDTO")
     public UserRegisterDTO userRegisterDTO() {
         return new UserRegisterDTO();
-    }
-
-    @ModelAttribute("userLoginDTO")
-    public UserLoginDTO userLoginDTO() {
-        return new UserLoginDTO();
     }
 
     @GetMapping("/register")
@@ -57,13 +50,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "login";
+    public ModelAndView login() {
+        return new ModelAndView("/login");
     }
 
     @PostMapping("/login-error")
-    public String onFailure(Model model) {
-        model.addAttribute("bad_credentials", true);
-        return "login";
+    public ModelAndView onFailure() {
+        ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("bad_credentials", true);
+        return modelAndView;
     }
 }

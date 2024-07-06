@@ -25,6 +25,18 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
         Object passwordValue = beanWrapper.getPropertyValue(this.password);
         Object confirmPasswordValue = beanWrapper.getPropertyValue(this.confirmPassword);
 
-        return passwordValue != null && passwordValue.equals(confirmPasswordValue);
+
+        boolean isValid =
+                (passwordValue != null && confirmPasswordValue != null) &&
+                        passwordValue.equals(confirmPasswordValue);
+
+        if (!isValid) {
+            context
+                    .buildConstraintViolationWithTemplate(this.message)
+                    .addPropertyNode(this.confirmPassword)
+                    .addConstraintViolation()
+                    .disableDefaultConstraintViolation();
+        }
+        return isValid;
     }
 }
