@@ -50,6 +50,9 @@ server:
   tomcat:
       max-swallow-size: 5MB
 
+bookstore:
+    remember.me.key: ${REMEMBER_ME_KEY}
+
 cloudinary:
     name: ${CLOUDINARY_NAME}
     api-key: ${CLOUDINARY_API_KEY}

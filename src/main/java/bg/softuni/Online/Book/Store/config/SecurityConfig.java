@@ -3,6 +3,7 @@ package bg.softuni.Online.Book.Store.config;
 import bg.softuni.Online.Book.Store.model.enums.UserRole;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.impl.BookStoreDetailsService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    private final String rememberMeKey;
+
+    public SecurityConfig(@Value("${bookstore.remember.me.key}") String rememberMeKey) {
+        this.rememberMeKey = rememberMeKey;
+    }
 
     @Bean
     public SecurityFilterChain
@@ -55,6 +62,14 @@ public class SecurityConfig {
                                             .logoutUrl("/users/logout")
                                             .logoutSuccessUrl("/users/login")
                                             .invalidateHttpSession(true);
+                                }
+                        )
+                        .rememberMe(
+                                rememberMe -> {
+                                    rememberMe
+                                            .key(rememberMeKey)
+                                            .rememberMeParameter("remember-me")
+                                            .rememberMeCookieName("remember-me");
                                 }
                         )
                         .build();
