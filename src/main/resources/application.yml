@@ -41,6 +41,21 @@ spring:
         mode: HTML
         encoding: UTF-8
         prefix: file:src/main/resources/templates/
+    security:
+        oauth2:
+            client:
+                registration:
+                    github:
+                        client-id: ${GITHUB_ID}
+                        client-secret: ${GITHUB_SECRET}
+                        scope: user:email
+#                provider:
+#                    github:
+#                        authorization-uri: https://github.com/login/oauth2/authorize
+#                        token-uri: https://github.com/login/oauth/access_token
+#                        user-info-uri: https://api.github.com/user
+#                        user-name-attribute: id
+
 logging:
     level:
         org.hibernate.SQL: debug

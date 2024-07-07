@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head>
     <meta charset="UTF-8">
@@ -19,6 +21,12 @@
     <div th:replace="~{fragments/navigation}"></div>
 
     <main class="container mt-4">
+       <div class="container-fluid mb-5">
+           <h5 class="text-center text-dark mt-5">
+               Welcome to Book Store,
+               <th:block th:text="${welcome}"></th:block>
+           </h5>
+       </div>
         <h2 class="text-center">Most Commented Book</h2>
         <div class="row justify-content-center">
             <div class="col-md-4 col-lg-3 mb-4">

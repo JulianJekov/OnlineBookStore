@@ -28,4 +28,20 @@ public class BookStoreUserDetails extends User {
     public String getLastName() {
         return lastName;
     }
+
+    public String getFullName() {
+        StringBuilder sb = new StringBuilder();
+
+        if (firstName != null) {
+            sb.append(firstName);
+        }
+        if (lastName != null) {
+            if (!sb.isEmpty()) {
+                sb.append(" ");
+            }
+            sb.append(lastName);
+        }
+        return sb.toString();
+    }
+
 }

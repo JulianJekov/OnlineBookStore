@@ -31,7 +31,7 @@ public class User extends BaseEntity {
     private int age;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
+    private List<Role> roles = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "user_books", joinColumns =
@@ -44,24 +44,6 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
-
-    public LocalDate getLastLoginDate() {
-        return lastLoginDate;
-    }
-
-    public User setLastLoginDate(LocalDate lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-        return this;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public User setActive(boolean active) {
-        isActive = active;
-        return this;
-    }
 
     private LocalDate lastLoginDate;
 
@@ -124,11 +106,11 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public Set<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
 
-    public User setRoles(Set<Role> roles) {
+    public User setRoles(List<Role> roles) {
         this.roles = roles;
         return this;
     }
@@ -157,6 +139,24 @@ public class User extends BaseEntity {
 
     public User setReviews(List<Review> reviews) {
         this.reviews = reviews;
+        return this;
+    }
+
+    public LocalDate getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public User setLastLoginDate(LocalDate lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
+        return this;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public User setActive(boolean active) {
+        isActive = active;
         return this;
     }
 }

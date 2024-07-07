@@ -2,19 +2,26 @@ package bg.softuni.Online.Book.Store.service.impl;
 
 import bg.softuni.Online.Book.Store.events.UserRegisterEvent;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
+import bg.softuni.Online.Book.Store.model.entity.ShoppingCart;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.model.enums.UserRole;
 import bg.softuni.Online.Book.Store.repository.RoleRepository;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
+import bg.softuni.Online.Book.Store.service.ShoppingCartService;
 import bg.softuni.Online.Book.Store.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.*;
 
 import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
 
@@ -26,17 +33,23 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final RoleRepository roleRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final ShoppingCartService shoppingCartService;
+    private final BookStoreDetailsService bookStoreDetailsService;
 
     public UserServiceImpl(UserRepository userRepository,
                            ModelMapper modelMapper,
                            PasswordEncoder passwordEncoder,
                            RoleRepository roleRepository,
-                           ApplicationEventPublisher eventPublisher) {
+                           ApplicationEventPublisher eventPublisher,
+                           ShoppingCartService shoppingCartService,
+                           BookStoreDetailsService bookStoreDetailsService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.roleRepository = roleRepository;
         this.eventPublisher = eventPublisher;
+        this.shoppingCartService = shoppingCartService;
+        this.bookStoreDetailsService = bookStoreDetailsService;
     }
 
     @Override
@@ -46,7 +59,7 @@ public class UserServiceImpl implements UserService {
         User user = modelMapper.map(userRegisterDTO, User.class);
         // TODO: send activation email
         user.setActive(true);
-        setRole(user);
+        setRoles(user);
         saveUser(user);
         eventPublisher.publishEvent(new UserRegisterEvent(user));
     }
@@ -68,13 +81,58 @@ public class UserServiceImpl implements UserService {
                 new UsernameNotFoundException(USER_WITH_EMAIL_NOT_FOUND));
     }
 
+    @Override
+    public boolean isUserExist(String email) {
+        return userRepository.findByEmail(email).isPresent();
+    }
+
+    @Override
+    @Transactional
+    public void createUserIfNotExist(String email, String name) {
+        User user = new User();
+        setRoles(user);
+        setUserFields(email, name, user);
+        saveUser(user);
+        setUserShoppingCart(user);
+    }
+
+    @Override
+    public Authentication login(String email) {
+        UserDetails userDetails = bookStoreDetailsService.loadUserByUsername(email);
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                userDetails.getPassword(),
+                userDetails.getAuthorities());
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return authentication;
+    }
+
+    private void setUserShoppingCart(User user) {
+        ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByUser(user);
+        user.setShoppingCart(shoppingCart);
+    }
+
+    private void setUserFields(String email, String name, User user) {
+        user.setEmail(email)
+                .setUsername(name)
+                .setFirstName(name.split(" ")[0])
+                .setLastName(name.split(" ")[1])
+                .setPassword(passwordEncoder.encode(UUID.randomUUID().toString()))
+                .setActive(true)
+                .setLastLoginDate(LocalDate.now())
+                .setAge(new Random().nextInt(100));
+    }
+
     private void encodePassword(UserRegisterDTO userRegisterDTO) {
         userRegisterDTO.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
     }
 
-    private void setRole(User user) {
-        user.getRoles().add(roleRepository.findByName(UserRole.USER));
+    private void setRoles(User user) {
+        if (this.userRepository.count() == 0) {
+            user.setRoles(roleRepository.findAll());
+        } else {
+            user.setRoles(List.of(this.roleRepository.findByName(UserRole.USER)));
+        }
     }
-
-
 }

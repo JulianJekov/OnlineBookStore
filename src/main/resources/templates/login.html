@@ -51,6 +51,19 @@
                     </div>
                     <button type="submit" class="btn btn-warning btn-block">Login</button>
                 </form>
+                <hr>
+                <div class="row">
+                <div class="text-center col-lg-6 mb-1">
+                    <a th:href="@{/oauth2/authorization/github}" class="btn btn-dark btn-block">
+                        <i class="fab fa-github"></i> Login with GitHub
+                    </a>
+                </div>
+                <div class="text-center col-lg-6">
+                    <a href="/users/login/github" class="btn btn-primary btn-block">
+                        <i class="fab fa-google"></i> Login with Google
+                    </a>
+                </div>
+                </div>
             </div>
         </div>
     </main>
@@ -60,6 +73,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/52fae3af75.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

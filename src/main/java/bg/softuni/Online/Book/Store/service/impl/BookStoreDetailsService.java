@@ -1,5 +1,6 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
+import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.model.entity.Role;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
@@ -8,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import java.util.List;
-import java.util.Set;
 
 import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
 
@@ -32,15 +32,15 @@ public class BookStoreDetailsService implements UserDetailsService {
     }
 
     private UserDetails mapUser(User user) {
-        return org.springframework.security.core.userdetails.User
-                .withUsername(user.getEmail())
-                .password(user.getPassword())
-                .authorities(mapRoles(user.getRoles()))
-                .disabled(false)
-                .build();
+        return new BookStoreUserDetails(
+                user.getEmail(),
+                user.getPassword(),
+                mapRoles(user.getRoles()),
+                user.getFirstName(),
+                user.getLastName());
     }
 
-    private List<SimpleGrantedAuthority> mapRoles(Set<Role> roles) {
+    private List<SimpleGrantedAuthority> mapRoles(List<Role> roles) {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName().name()))
                 .toList();

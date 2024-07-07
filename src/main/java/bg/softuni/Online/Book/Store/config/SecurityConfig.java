@@ -1,6 +1,7 @@
 package bg.softuni.Online.Book.Store.config;
 
 import bg.softuni.Online.Book.Store.model.enums.UserRole;
+import bg.softuni.Online.Book.Store.oauth.OAuthSuccessHandler;
 import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.impl.BookStoreDetailsService;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,7 +28,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain
     securityFilterChain(HttpSecurity http,
-                        CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler) throws Exception {
+                        CustomAuthenticationSuccessHandler
+                                customAuthenticationSuccessHandler,
+                        OAuthSuccessHandler oAuthSuccessHandler
+                        ) throws Exception {
         return
                 http
                         .csrf(
@@ -72,11 +75,17 @@ public class SecurityConfig {
                                             .rememberMeCookieName("remember-me");
                                 }
                         )
+                        .oauth2Login(
+                                oauth2Login -> {
+                                    oauth2Login
+                                            .successHandler(oAuthSuccessHandler);
+                                }
+                        )
                         .build();
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
+    public BookStoreDetailsService userDetailsService(UserRepository userRepository) {
         return new BookStoreDetailsService(userRepository);
     }
 

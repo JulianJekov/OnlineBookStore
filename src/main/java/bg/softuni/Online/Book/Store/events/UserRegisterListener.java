@@ -24,8 +24,6 @@ public class UserRegisterListener {
         ShoppingCart shoppingCart = shoppingCartService.getShoppingCartByUser(user);
         shoppingCart.setUser(user);
         shoppingCartService.saveShoppingCart(shoppingCart);
-
         user.setShoppingCart(shoppingCart);
-        userService.saveUser(user);
     }
 }
