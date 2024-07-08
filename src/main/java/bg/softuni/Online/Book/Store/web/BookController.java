@@ -2,12 +2,15 @@ package bg.softuni.Online.Book.Store.web;
 
 import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
+import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
+import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
 import bg.softuni.Online.Book.Store.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,7 +38,6 @@ public class BookController {
     public ModelAndView addBook(@Valid AddBookDTO addBookDTO, BindingResult bindingResult,
                                 RedirectAttributes redirectAttributes) throws IOException {
 
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("addBookDTO", addBookDTO);
             redirectAttributes.addFlashAttribute(
@@ -57,19 +59,49 @@ public class BookController {
         return modelAndView;
     }
 
-    }
-
-        modelAndView.addObject("editBookDTO", bookService.findBookByIdEdit(id));
+    @GetMapping("/details/{id}")
+    public ModelAndView details(@PathVariable("id") Long id) {
+        BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
+        ModelAndView modelAndView = new ModelAndView("/book-details");
+        modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
         return modelAndView;
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id") Long id, Model model) {
+        EditBookDTO editBookDTO = bookService.findBookByIdEdit(id);
+        if (!model.containsAttribute("editBookDTO")) {
+            model.addAttribute("editBookDTO", editBookDTO);
+        }
+        return "edit-book";
+    }
+
+    @PatchMapping("/edit/{id}")
+    public ModelAndView edit(@PathVariable("id") Long id, @Valid EditBookDTO editBookDTO, BindingResult bindingResult,
+                             RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("editBookDTO", editBookDTO);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.editBookDTO", bindingResult);
+            return new ModelAndView("redirect:/books/edit/" + id);
+        }
+
+        Long updatedBookId = bookService.editBook(editBookDTO);
+
+        return new ModelAndView("redirect:/books/details/" + updatedBookId);
+    }
+
+    @ModelAttribute("addBookDTO")
+    public AddBookDTO addBookDTO() {
+        return new AddBookDTO();
     }
 
     @ModelAttribute("allBooksDTO")
     public AllBooksDTO allBooksDTO() {
         return new AllBooksDTO();
-        return new EditBookDTO();
     }
+
+
 
     @ModelAttribute("bookDetailsDTO")
     public BookDetailsDTO bookDetailsDTO() {

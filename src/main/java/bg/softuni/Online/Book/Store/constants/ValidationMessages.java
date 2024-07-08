@@ -22,10 +22,10 @@ public enum ValidationMessages {
     public static final String BOOK_TITLE_LENGTH_MESSAGE = "Book title must be between 2 and 50 characters!";
 
     public static final String BOOK_AUTHOR_CAN_NOT_BE_NULL = "Book author cannot be null!";
-    public static final String BOOK_AUTHOR_LENGTH_MESSAGE = "Book author must be between 3 and 20 characters!";
+    public static final String BOOK_AUTHOR_LENGTH_MESSAGE = "Book author must be between 3 and 50 characters!";
 
     public static final String BOOK_PUBLISHER_CAN_NOT_BE_NULL = "Book publisher cannot be null!";
-    public static final String BOOK_PUBLISHER_LENGTH_MESSAGE = "Book publisher must be between 3 and 20 characters!";
+    public static final String BOOK_PUBLISHER_LENGTH_MESSAGE = "Book publisher must be between 3 and 50 characters!";
 
     public static final String BOOK_PRICE_POSITIVE = "Book price must be greater than 0!";
 
@@ -33,6 +33,9 @@ public enum ValidationMessages {
     public static final String IMAGE_MAX_SIZE = "Max size can not be more than %d";
     public static final String IMAGE_TYPE_MESSAGE =  "Invalid file type. Supported files: %s";
 
+    public static final String BOOK_ISBN_EXISTS = "Book ISBN already exists!";
+    public static final String BOOK_ISBN_SIZE = "Book ISBN must be 13 characters!";
+    public static final String BOOK_ISBN_CAN_NOT_BE_NULL = "Book ISBN cannot be null!";
 
 
     ValidationMessages() {

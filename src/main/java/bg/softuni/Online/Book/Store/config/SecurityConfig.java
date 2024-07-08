@@ -34,9 +34,6 @@ public class SecurityConfig {
                         ) throws Exception {
         return
                 http
-                        .csrf(
-                                AbstractHttpConfigurer::disable
-                        )
                         .authorizeHttpRequests(
                                 authorizeRequest -> {
                                     authorizeRequest

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,30 +22,71 @@
         <div class="container">
             <div class="form-container">
                 <h2 class="text-center">Edit Book</h2>
-                <form>
+                <form
+                        th:method="PATCH"
+                        th:object="${editBookDTO}"
+                        th:action="@{/books/edit/{id}(id=*{id})}"
+                        enctype="multipart/form-data"
+                >
                     <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter book title" value="Existing Title" required>
+                        <input type="text" class="form-control" id="title" placeholder="Enter book title"
+                               th:name="title"
+                               th:field="*{title}"
+                               th:errorclass="is-invalid"
+                        >
+                        <small th:errors="*{title}" class="invalid-feedback danger"></small>
                     </div>
                     <div class="form-group">
                         <label for="author">Author</label>
-                        <input type="text" class="form-control" id="author" placeholder="Enter author name" value="Existing Author" required>
+                        <input type="text" class="form-control" id="author" placeholder="Enter author name"
+                               th:name="author"
+                               th:field="*{author}"
+                               th:errorclass="is-invalid"
+                        >
+                        <small th:errors="*{author}" class="invalid-feedback danger"></small>
                     </div>
                     <div class="form-group">
                         <label for="publisher">Publisher</label>
-                        <input type="text" class="form-control" id="publisher" placeholder="Enter publisher name" value="Existing Publisher" required>
+                        <input type="text" class="form-control" id="publisher" placeholder="Enter publisher name"
+                               th:name="*{publisher}"
+                               th:field="*{publisher}"
+                               th:errorclass="is-invalid"
+                        >
+                        <small th:errors="*{publisher}" class="invalid-feedback danger"></small>
                     </div>
                     <div class="form-group">
                         <label for="isbn">ISBN</label>
-                        <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN number" value="Existing ISBN" required>
+                        <input type="text" class="form-control" id="isbn" placeholder="Enter ISBN number"
+                               th:name="*{isbn}"
+                               th:field="*{isbn}"
+                               th:errorclass="is-invalid"
+                        >
+                        <small th:errors="*{isbn}" class="invalid-feedback danger"></small>
                     </div>
                     <div class="form-group">
                         <label for="price">Price</label>
-                        <input type="number" class="form-control" id="price" placeholder="Enter book price" value="Existing Price" required>
+                        <input type="number" class="form-control" id="price" placeholder="Enter book price"
+                               th:name="*{price}"
+                               th:field="*{price}"
+                               th:errorclass="is-invalid"
+                        >
+                        <small th:errors="*{price}" class="invalid-feedback danger"></small>
                     </div>
                     <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" placeholder="Enter book description" required></textarea>
+                        <label for="imageUrl" class="col-form-label">ImageUrl</label>
+                        <div class="form-group">
+                            <input
+                                    th:name="*{imageUrl}"
+                                    th:field="*{imageUrl}"
+                                    th:errorclass="is-invalid"
+                                    type="file"
+                                    id="imageUrl"
+                                    class="form-control-file"
+                                    aria-describedby="imageUrl"
+                            >
+                            <small th:errors="*{imageUrl}" class="invalid-feedback danger"></small>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-warning btn-block">Update Book</button>
                 </form>

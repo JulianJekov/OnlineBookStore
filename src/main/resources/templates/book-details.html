@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -19,22 +19,32 @@
     <div th:replace="~{fragments/navigation}"></div>
 
     <main class="container mt-4">
-        <div class="row">
-            <div class="col-md-3 img-container">
-                <img src="/images/352202-admin.jpg" class="img-fluid" alt="Book Image">
+        <div class="row mt-5" th:object="${bookDetailsDTO}">
+            <div class="card col-lg-5 m-1 p-2">
+                <img class="img-fluid" th:src="${bookDetailsDTO.imageUrl}" alt="Book Image">
             </div>
             <div class="col-md-6 font-weight-bold text-center">
-                <h2>Book Title</h2>
-                <p>Author: Author Name</p>
-                <p>Publisher: Publisher Name</p>
-                <p>ISBN: 123-456-789</p>
-                <p>Price: $19.99</p>
-                <div class="form-group">
+                <h2 th:text="|Book Title: ${bookDetailsDTO.title}|">Book Title</h2>
+                <p th:text="|Author: ${bookDetailsDTO.author}|">Author: Author Name</p>
+                <p th:text="|Publisher: ${bookDetailsDTO.publisher}|">Publisher: Publisher Name</p>
+                <p th:text="|ISBN: ${bookDetailsDTO.isbn}|">ISBN: 123-456-789</p>
+                <p th:text="|Price: ${bookDetailsDTO.price}|">Price: $19.99</p>
+                <div class="form-group mt-5">
                     <label for="quantity">Quantity</label>
                     <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
                 </div>
-                <button class="btn btn-warning">Add to Cart</button>
+
             </div>
+        </div>
+        <div class="row justify-content-center">
+            <form>
+                <button class="btn btn-warning mt-5 mr-2">Add to Cart</button>
+            </form>
+
+            <form th:action="@{/books/edit/{id} (id= ${bookDetailsDTO.id})}" th:method="GET">
+                <button type="submit" class="btn btn-success mt-5 mr-2">Edit</button>
+            </form>
+            <button class="btn btn-danger mt-5">Remove</button>
         </div>
     </main>
 
