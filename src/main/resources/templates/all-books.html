@@ -22,37 +22,17 @@
         <h2 class="text-center">Available Books</h2>
         <div class="row justify-content-center">
             <!-- Repeat this block for each book -->
-            <div class="col-md-6 col-lg-4 mb-4">
+            <div class="col-md-6 col-lg-4 mb-4 image-container"
+                 th:each="book : ${allBooksDTO}">
                 <div class="card h-100">
-                    <img src="/images/352202-admin.jpg" class="card-img-top" alt="Book Image">
+                    <img th:src="${book.imageUrl}" alt="Book Image">
                     <div class="card-body">
-                        <h5 class="card-title">Book Title</h5>
-                        <p class="card-text">Author Name</p>
-                        <a th:href="@{/books/details}" class="btn btn-warning">View Details</a>
+                        <h5 th:text="${book.title}" class="card-title">Book Title</h5>
+                        <p th:text="${book.author}" class="card-text">Author Name</p>
+                        <a th:href="@{/books/details/{id} (id = ${book.id})}" class="btn btn-warning">View Details</a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100">
-                    <img src="/images/book-1283865_1280.jpg" class="card-img-top" alt="Book Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Book Title</h5>
-                        <p class="card-text">Author Name</p>
-                        <a th:href="@{/books/details}" class="btn btn-warning">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100">
-                    <img src="/images/book-1283865_1280.jpg" class="card-img-top" alt="Book Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Book Title</h5>
-                        <p class="card-text">Author Name</p>
-                        <a th:href="@{/books/details}" class="btn btn-warning">View Details</a>
-                    </div>
-                </div>
-            </div>
-            <!-- End of book block -->
         </div>
 
     </main>

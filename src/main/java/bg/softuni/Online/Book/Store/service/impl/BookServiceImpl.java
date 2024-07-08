@@ -1,11 +1,14 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
 import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
+import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.repository.BookRepository;
 import bg.softuni.Online.Book.Store.service.BookService;
 import bg.softuni.Online.Book.Store.util.ISBNUtil;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,4 +35,11 @@ public class BookServiceImpl implements BookService {
         book.setImageUrl(imageCloudService.uploadImg(addBookDTO.getImageUrl()));
         return bookRepository.save(book).getId();
     }
+
+    @Override
+    public Page<AllBooksDTO> findAllBooks(Pageable pageable) {
+        return bookRepository.findAll(pageable)
+                .map(book -> modelMapper.map(book, AllBooksDTO.class));
+    }
+
 }
