@@ -52,7 +52,8 @@ public class BookController {
 
 
     @GetMapping("/all")
-    public ModelAndView allBooks(@PageableDefault(size = 3, sort = "id") Pageable pageable) {
+    public ModelAndView allBooks(@PageableDefault(size = 3, sort = "id") Pageable pageable,
+                                 @RequestParam(name = "page", defaultValue = "0") int page) {
         Page<AllBooksDTO> allBooksDTO = bookService.findAllBooks(pageable);
         ModelAndView modelAndView = new ModelAndView("all-books");
         modelAndView.addObject("allBooksDTO", allBooksDTO);
@@ -89,6 +90,12 @@ public class BookController {
         Long updatedBookId = bookService.editBook(editBookDTO);
 
         return new ModelAndView("redirect:/books/details/" + updatedBookId);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) {
+        bookService.deleteBook(id);
+        return new ModelAndView("redirect:/books/all");
     }
 
     @ModelAttribute("addBookDTO")

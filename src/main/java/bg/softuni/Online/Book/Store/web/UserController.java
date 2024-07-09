@@ -60,4 +60,9 @@ public class UserController {
         modelAndView.addObject("bad_credentials", true);
         return modelAndView;
     }
+
+    @GetMapping("/profile")
+    public ModelAndView profile() {
+        return new ModelAndView("profile");
+    }
 }

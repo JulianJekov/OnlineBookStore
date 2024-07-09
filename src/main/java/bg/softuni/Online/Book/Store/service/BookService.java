@@ -23,4 +23,6 @@ public interface BookService {
     Long editBook(EditBookDTO editBookDTO);
 
     Optional<Book> findByISBN(String isbn);
+
+    void deleteBook(Long id);
 }

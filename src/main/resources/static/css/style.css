@@ -7,6 +7,23 @@ html, body {
     background-size: cover;
 }
 
+.not-found {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: url(../images/not-found-404.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+.forbidden {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    background: url(../images/forbidden-403.png) no-repeat center center fixed;
+    background-size: cover;
+}
+
 .my-main{
     flex: 1;
     display: flex;

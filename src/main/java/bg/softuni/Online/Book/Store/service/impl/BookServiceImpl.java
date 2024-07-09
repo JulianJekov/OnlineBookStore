@@ -1,5 +1,6 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
+import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
 import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static bg.softuni.Online.Book.Store.constants.Exceptions.BOOK_NOT_FOUND;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -49,13 +52,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDetailsDTO findBookById(Long id) {
         return bookRepository.findById(id).map(book -> modelMapper.map(book, BookDetailsDTO.class))
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id)));
     }
 
     @Override
     public EditBookDTO findBookByIdEdit(Long id) {
         return bookRepository.findById(id).map(book -> modelMapper.map(book, EditBookDTO.class))
-                .orElseThrow(() -> new RuntimeException("Book not found"));
+                .orElseThrow(() -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id)));
     }
 
     @Override
@@ -70,5 +73,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findByISBN(String isbn) {
         return bookRepository.findByIsbn(isbn);
+    }
+
+    @Override
+    public void deleteBook(Long id) {
+        bookRepository.deleteById(id);
+        //TODO: handle the reviews that book will have also books will be bought by user also hand this
     }
 }

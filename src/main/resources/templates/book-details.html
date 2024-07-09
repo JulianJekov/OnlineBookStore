@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 
 <head>
     <meta charset="UTF-8">
@@ -37,14 +39,25 @@
             </div>
         </div>
         <div class="row justify-content-center">
-            <form>
-                <button class="btn btn-warning mt-5 mr-2">Add to Cart</button>
+
+            <form   class="col"
+                    sec:authorize="hasRole('ADMIN')"
+                    th:action="@{/books/edit/{id} (id= ${bookDetailsDTO.id})}"
+                    th:method="GET">
+                <button type="submit" class="col btn btn-success mt-5">Edit</button>
+            </form>
+            <form class="col">
+                <button class="col btn btn-warning mt-5">Add to Cart</button>
             </form>
 
-            <form th:action="@{/books/edit/{id} (id= ${bookDetailsDTO.id})}" th:method="GET">
-                <button type="submit" class="btn btn-success mt-5 mr-2">Edit</button>
+            <form class="col"
+                  sec:authorize="hasRole('ADMIN')"
+                  th:action="@{/books/delete/{id} (id =${bookDetailsDTO.id})}"
+                  th:method="DELETE"
+            >
+                <button class="col btn btn-danger mt-5 ml-3">Remove</button>
             </form>
-            <button class="btn btn-danger mt-5">Remove</button>
+
         </div>
     </main>
 
