@@ -1,9 +1,6 @@
 package bg.softuni.Online.Book.Store.model.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +12,7 @@ public class ShoppingCart extends BaseEntity{
     @OneToOne
     private User user;
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public ShoppingCart() {

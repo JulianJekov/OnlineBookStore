@@ -1,20 +1,40 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
-import bg.softuni.Online.Book.Store.model.entity.ShoppingCart;
-import bg.softuni.Online.Book.Store.model.entity.User;
+import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
+import bg.softuni.Online.Book.Store.model.dto.cartItem.CartItemDTO;
+import bg.softuni.Online.Book.Store.model.dto.cartItem.ShoppingCartDTO;
+import bg.softuni.Online.Book.Store.model.entity.*;
+import bg.softuni.Online.Book.Store.repository.BookRepository;
+import bg.softuni.Online.Book.Store.repository.CartItemRepository;
 import bg.softuni.Online.Book.Store.repository.ShoppingCartRepository;
+import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.ShoppingCartService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static bg.softuni.Online.Book.Store.constants.Exceptions.*;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
+    private final UserRepository userRepository;
+    private final CartItemRepository cartItemRepository;
+    private final BookRepository bookRepository;
+    private final ModelMapper modelMapper;
 
-    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository) {
+    public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository,
+                                   UserRepository userRepository,
+                                   CartItemRepository cartItemRepository,
+                                   BookRepository bookRepository,
+                                   ModelMapper modelMapper) {
         this.shoppingCartRepository = shoppingCartRepository;
+        this.userRepository = userRepository;
+        this.cartItemRepository = cartItemRepository;
+        this.bookRepository = bookRepository;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -29,11 +49,60 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
+    @Override
+    public void addItemToCart(CartItemDTO cartItemDTO, BookStoreUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        Long bookId = cartItemDTO.getBookId();
+        int quantity = cartItemDTO.getQuantity();
+
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, userId)));
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user).orElseThrow(
+                () -> new ObjectNotFoundException(SHOPPING_CART_NOT_FOUND));
+
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, bookId)));
+
+        CartItem cartItem = cartItemRepository.findByCartAndBook(shoppingCart, book);
+
+        if (cartItem == null) {
+            cartItem = new CartItem();
+            cartItem.setCart(shoppingCart);
+            cartItem.setBook(book);
+            cartItem.setQuantity(quantity);
+        } else {
+            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+        }
+        cartItemRepository.save(cartItem);
+        shoppingCart.getCartItems().add(cartItem);
+        shoppingCartRepository.save(shoppingCart);
+
+    }
+
+    @Override
+    public ShoppingCartDTO viewShoppingCart(BookStoreUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, userId)));
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findByUser(user).orElseThrow(
+                () -> new ObjectNotFoundException(SHOPPING_CART_NOT_FOUND));
+
+        return modelMapper.map(shoppingCart, ShoppingCartDTO.class);
+    }
+
+    @Override
+    public void deleteItem(Long id) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findByCartItemsId(id).orElseThrow(
+                () -> new ObjectNotFoundException(SHOPPING_CART_NOT_FOUND));
+        cartItemRepository.deleteById(id);
+        shoppingCartRepository.save(shoppingCart);
+    }
+
     private ShoppingCart createShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
         return saveShoppingCart(shoppingCart);
     }
-
-
 }

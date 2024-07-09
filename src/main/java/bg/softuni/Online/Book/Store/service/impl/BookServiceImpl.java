@@ -7,6 +7,7 @@ import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
 import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.repository.BookRepository;
+import bg.softuni.Online.Book.Store.repository.CartItemRepository;
 import bg.softuni.Online.Book.Store.service.BookService;
 import bg.softuni.Online.Book.Store.util.ISBNUtil;
 import org.modelmapper.ModelMapper;
@@ -25,13 +26,15 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
     private final ImageCloudService imageCloudService;
+    private final CartItemRepository cartItemRepository;
 
     public BookServiceImpl(BookRepository bookRepository,
                            ModelMapper modelMapper,
-                           ImageCloudService imageCloudService) {
+                           ImageCloudService imageCloudService, CartItemRepository cartItemRepository) {
         this.bookRepository = bookRepository;
         this.modelMapper = modelMapper;
         this.imageCloudService = imageCloudService;
+        this.cartItemRepository = cartItemRepository;
     }
 
     @Override
@@ -76,7 +79,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    @Transactional
     public void deleteBook(Long id) {
+        cartItemRepository.deleteByBookId(id);
         bookRepository.deleteById(id);
         //TODO: handle the reviews that book will have also books will be bought by user also hand this
     }

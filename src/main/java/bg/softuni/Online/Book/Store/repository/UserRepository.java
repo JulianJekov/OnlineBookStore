@@ -1,7 +1,6 @@
 package bg.softuni.Online.Book.Store.repository;
 
 import bg.softuni.Online.Book.Store.model.entity.User;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

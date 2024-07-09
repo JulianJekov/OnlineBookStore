@@ -7,18 +7,23 @@ import java.util.Collection;
 
 public class BookStoreUserDetails extends User {
 
-
+    private final Long id;
     private final String firstName;
     private final String lastName;
 
     public BookStoreUserDetails(
             String username, String password,
-            Collection<? extends GrantedAuthority> authorities,
+            Collection<? extends GrantedAuthority> authorities, Long id,
             String firstName,
             String lastName) {
         super(username, password, authorities);
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getFirstName() {

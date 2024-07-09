@@ -22,7 +22,7 @@
 
     <main class="container mt-4">
         <div class="row mt-5" th:object="${bookDetailsDTO}">
-            <div class="card col-lg-5 m-1 p-2">
+            <div class="card col-lg-5 m-3 mt-5 p-2">
                 <img class="img-fluid" th:src="${bookDetailsDTO.imageUrl}" alt="Book Image">
             </div>
             <div class="col-md-6 font-weight-bold text-center">
@@ -31,23 +31,27 @@
                 <p th:text="|Publisher: ${bookDetailsDTO.publisher}|">Publisher: Publisher Name</p>
                 <p th:text="|ISBN: ${bookDetailsDTO.isbn}|">ISBN: 123-456-789</p>
                 <p th:text="|Price: ${bookDetailsDTO.price}|">Price: $19.99</p>
-                <div class="form-group mt-5">
-                    <label for="quantity">Quantity</label>
-                    <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                <div class="form-group mt-5 ml-5">
+                    <form class="col"
+                          th:action="@{/cart/add}"
+                          th:method="POST"
+                    >
+                        <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1">
+                        <button type="submit" class="col btn btn-warning mt-5">Add to Cart</button>
+                    </form>
+
                 </div>
 
             </div>
         </div>
         <div class="row justify-content-center">
-
             <form   class="col"
                     sec:authorize="hasRole('ADMIN')"
                     th:action="@{/books/edit/{id} (id= ${bookDetailsDTO.id})}"
                     th:method="GET">
                 <button type="submit" class="col btn btn-success mt-5">Edit</button>
-            </form>
-            <form class="col">
-                <button class="col btn btn-warning mt-5">Add to Cart</button>
             </form>
 
             <form class="col"
@@ -55,7 +59,7 @@
                   th:action="@{/books/delete/{id} (id =${bookDetailsDTO.id})}"
                   th:method="DELETE"
             >
-                <button class="col btn btn-danger mt-5 ml-3">Remove</button>
+                <button class="col btn btn-danger mt-5">Remove</button>
             </form>
 
         </div>
