@@ -28,11 +28,14 @@ public class Book extends BaseEntity {
     @Column(nullable = false)
     private String imageUrl;
 
-    @ManyToMany(mappedBy = "boughtBooks")
-    private List<User> boughtBy = new ArrayList<>();
-
     @OneToMany(mappedBy = "book")
     private List<Review> reviews = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new ArrayList<>();
+
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     public Book() {}
 
@@ -81,15 +84,6 @@ public class Book extends BaseEntity {
         return this;
     }
 
-    public List<User> getBoughtBy() {
-        return boughtBy;
-    }
-
-    public Book setBoughtBy(List<User> boughtBy) {
-        this.boughtBy = boughtBy;
-        return this;
-    }
-
     public List<Review> getReviews() {
         return reviews;
     }
@@ -105,6 +99,24 @@ public class Book extends BaseEntity {
 
     public Book setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public List<CartItem> getCartItems() {
+        return cartItems;
+    }
+
+    public Book setCartItems(List<CartItem> cartItems) {
+        this.cartItems = cartItems;
+        return this;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public Book setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
         return this;
     }
 }

@@ -9,10 +9,10 @@ import java.util.List;
 @Table(name = "shopping_cards")
 public class ShoppingCart extends BaseEntity{
 
-    @OneToOne
+    @OneToOne()
     private User user;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public ShoppingCart() {

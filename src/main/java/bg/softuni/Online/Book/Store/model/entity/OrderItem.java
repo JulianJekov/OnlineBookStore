@@ -7,27 +7,36 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "cart_items")
-public class CartItem extends BaseEntity {
+@Table(name = "order_items")
+public class OrderItem extends BaseEntity {
+
+    @ManyToOne(optional = false)
+    private Order order;
 
     @ManyToOne(optional = false)
     private Book book;
 
-    @ManyToOne(optional = false)
-    private ShoppingCart shoppingCart;
+    private int quantity;
 
     private BigDecimal price;
 
-    private int quantity;
+    public OrderItem() {
+    }
 
-    public CartItem() {
+    public Order getOrder() {
+        return order;
+    }
+
+    public OrderItem setOrder(Order order) {
+        this.order = order;
+        return this;
     }
 
     public Book getBook() {
         return book;
     }
 
-    public CartItem setBook(Book book) {
+    public OrderItem setBook(Book book) {
         this.book = book;
         return this;
     }
@@ -36,17 +45,8 @@ public class CartItem extends BaseEntity {
         return quantity;
     }
 
-    public CartItem setQuantity(int quantity) {
+    public OrderItem setQuantity(int quantity) {
         this.quantity = quantity;
-        return this;
-    }
-
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
-    }
-
-    public CartItem setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
         return this;
     }
 
@@ -54,7 +54,7 @@ public class CartItem extends BaseEntity {
         return price;
     }
 
-    public CartItem setPrice(BigDecimal price) {
+    public OrderItem setPrice(BigDecimal price) {
         this.price = price;
         return this;
     }

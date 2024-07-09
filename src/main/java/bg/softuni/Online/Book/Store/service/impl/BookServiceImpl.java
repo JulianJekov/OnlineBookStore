@@ -83,6 +83,7 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Long id) {
         cartItemRepository.deleteByBookId(id);
         bookRepository.deleteById(id);
-        //TODO: handle the reviews that book will have also books will be bought by user also hand this
+        //TODO: handle the reviews that book will have
+        //TODO: test orphanRemoval
     }
 }

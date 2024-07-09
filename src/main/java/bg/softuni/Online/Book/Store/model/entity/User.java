@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -33,14 +31,11 @@ public class User extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "user_books", joinColumns =
-    @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns =
-    @JoinColumn(name = "book_id", referencedColumnName = "id"))
-    private List<Book> boughtBooks = new ArrayList<>();
-
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private ShoppingCart shoppingCart;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();
@@ -115,14 +110,6 @@ public class User extends BaseEntity {
         return this;
     }
 
-    public List<Book> getBoughtBooks() {
-        return boughtBooks;
-    }
-
-    public User setBoughtBooks(List<Book> boughtBooks) {
-        this.boughtBooks = boughtBooks;
-        return this;
-    }
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
@@ -157,6 +144,15 @@ public class User extends BaseEntity {
 
     public User setActive(boolean active) {
         isActive = active;
+        return this;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public User setOrders(List<Order> orders) {
+        this.orders = orders;
         return this;
     }
 }

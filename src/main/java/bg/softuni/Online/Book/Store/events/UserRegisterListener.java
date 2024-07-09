@@ -3,7 +3,6 @@ package bg.softuni.Online.Book.Store.events;
 import bg.softuni.Online.Book.Store.model.entity.ShoppingCart;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.service.ShoppingCartService;
-import bg.softuni.Online.Book.Store.service.UserService;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -11,11 +10,9 @@ import org.springframework.stereotype.Component;
 public class UserRegisterListener {
 
     private final ShoppingCartService shoppingCartService;
-    private final UserService userService;
 
-    public UserRegisterListener(ShoppingCartService shoppingCartService, UserService userService) {
+    public UserRegisterListener(ShoppingCartService shoppingCartService) {
         this.shoppingCartService = shoppingCartService;
-        this.userService = userService;
     }
 
     @EventListener

@@ -53,7 +53,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void addItemToCart(CartItemDTO cartItemDTO, BookStoreUserDetails userDetails) {
         Long userId = userDetails.getId();
         Long bookId = cartItemDTO.getBookId();
-        int quantity = cartItemDTO.getQuantity();
 
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, userId)));
@@ -64,15 +63,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, bookId)));
 
-        CartItem cartItem = cartItemRepository.findByCartAndBook(shoppingCart, book);
+        CartItem cartItem = cartItemRepository.findByShoppingCartAndBook(shoppingCart, book);
 
         if (cartItem == null) {
-            cartItem = new CartItem();
-            cartItem.setCart(shoppingCart);
+            cartItem = modelMapper.map(cartItemDTO, CartItem.class);
+            cartItem.setShoppingCart(shoppingCart);
             cartItem.setBook(book);
-            cartItem.setQuantity(quantity);
         } else {
-            cartItem.setQuantity(cartItem.getQuantity() + quantity);
+            cartItem.setQuantity(cartItem.getQuantity() + cartItemDTO.getQuantity());
         }
         cartItemRepository.save(cartItem);
         shoppingCart.getCartItems().add(cartItem);

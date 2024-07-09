@@ -8,8 +8,9 @@ import bg.softuni.Online.Book.Store.model.entity.User;
 
 public interface ShoppingCartService {
 
-   ShoppingCart getShoppingCartByUser(User user);
-   ShoppingCart saveShoppingCart(ShoppingCart shoppingCart);
+    ShoppingCart getShoppingCartByUser(User user);
+
+    ShoppingCart saveShoppingCart(ShoppingCart shoppingCart);
 
     void addItemToCart(CartItemDTO cartItemDTO, BookStoreUserDetails userDetails);
 
