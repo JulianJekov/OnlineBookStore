@@ -25,7 +25,7 @@
             <div class="col-md-6 col-lg-4 mb-4 image-container"
                  th:each="book : ${allBooksDTO}">
                 <div class="card h-100">
-                    <img th:src="${book.imageUrl}" alt="Book Image">
+                    <img class="img-thumbnail" th:src="${book.imageUrl}" alt="Book Image">
                     <div class="card-body">
                         <h5 th:text="${book.title}" class="card-title">Book Title</h5>
                         <p th:text="${book.author}" class="card-text">Author Name</p>
@@ -34,6 +34,28 @@
                 </div>
             </div>
         </div>
+
+        <nav aria-label="Books Pagination">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:class="${allBooksDTO.first ? 'disabled' : ''}">
+                    <a class="page-link" th:if="${!allBooksDTO.first}" th:href="@{/books/all(page=0)}">First</a>
+                </li>
+                <li class="page-item" th:class="${allBooksDTO.first ? 'disabled' : ''}">
+                    <a class="page-link" th:if="${!allBooksDTO.first}" th:href="@{/books/all(page=${allBooksDTO.number - 1})}">Previous</a>
+                </li>
+
+                <li th:each="pageNumber : ${#numbers.sequence(0, allBooksDTO.totalPages - 1)}"
+                    th:class="${pageNumber == allBooksDTO.number ? 'page-item active' : 'page-item'}">
+                    <a class="page-link" th:href="@{/books/all(page=${pageNumber})}" th:text="${pageNumber + 1}"></a>
+                </li>
+                <li class="page-item" th:class="${allBooksDTO.last ? 'disabled' : ''}">
+                    <a class="page-link" th:if="${!allBooksDTO.last}" th:href="@{/books/all(page=${allBooksDTO.number + 1})}">Next</a>
+                </li>
+                <li class="page-item" th:class="${allBooksDTO.last ? 'disabled' : ''}">
+                    <a class="page-link" th:if="${!allBooksDTO.last}" th:href="@{/books/all(page=${allBooksDTO.totalPages - 1})}">Last</a>
+                </li>
+            </ul>
+        </nav>
 
     </main>
 

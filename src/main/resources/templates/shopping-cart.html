@@ -7,6 +7,7 @@
     <title>Online Bookstore - Shopping Cart</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/orders.css">
 </head>
 
 <body>
@@ -34,23 +35,21 @@
                     </tr>
                 </thead>
                 <tbody >
-                    <!-- Repeat this block for each item in the cart -->
                     <tr th:each="cart : ${shoppingCartDTO.cartItems}">
                         <td th:text="${cart.bookTitle}">Book Title</td>
                         <td th:text="${cart.quantity}">1</td>
-                        <td th:text="${cart.bookPrice}">$19.99</td>
+                        <td th:text="${cart.price}">$19.99</td>
                         <td th:text="${cart.totalPrice}">$19.99</td>
                         <td class="row">
                             <form th:method="DELETE" th:action="@{/cart/delete/{id} (id = ${cart.id})}">
                                 <button class="btn btn-danger mr-2">Remove</button>
                             </form>
-                            <form th:method="POST" th:action="@{/cart/buy/{id} (id = ${cart.id})}">
+                            <form th:method="POST" th:action="@{/order/buy/{id} (id = ${cart.id})}">
                                 <button class="btn btn-warning">Buy the books</button>
                             </form>
                         </td>
                         <td></td>
                     </tr>
-                    <!-- End of cart item block -->
                 </tbody>
             </table>
         </div>

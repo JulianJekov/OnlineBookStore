@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,6 +7,7 @@
     <title>Order History</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/orders.css">
 </head>
 
 <body>
@@ -20,33 +21,54 @@
 
     <main class="container mt-4">
         <h2 class="text-center">Your Orders</h2>
-        <div class="table-responsive content-wrapper">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Total</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Repeat this block for each order -->
-                    <tr>
-                        <td>123456</td>
-                        <td>01/01/2023</td>
-                        <td>$39.98</td>
-                        <td>Shipped</td>
-                    </tr>
-                    <tr>
-                        <td>123456</td>
-                        <td>01/01/2023</td>
-                        <td>$39.98</td>
-                        <td>Shipped</td>
-                    </tr>
-                    <!-- End of order block -->
-                </tbody>
-            </table>
+        <div th:object="${orders}" class="table-responsive content-wrapper">
+
+
+            <div th:each="o : ${orders}" class="order">
+                <div class="order-header">
+                    <span th:text="|Order ID: ${o.id}|" class="order-id">Order ID: 12345</span>
+                    <span th:text="|Order Date: ${o.orderDate}|" class="order-date">Order Date: 2023-07-01</span>
+                </div>
+                <hr>
+                <div th:each="oi : ${o.getOrderItems()}" class="order-items">
+                    <div class="order-item">
+                        <img th:src="${oi.bookImageUrl}" alt="Item 1" class="item-img">
+                        <div class="item-details">
+                            <span th:text="|Book Title: ${oi.bookTitle}|" class="item-name">Item Name 1</span>
+                            <span th:text="|Quantity: ${oi.quantity}|" class="item-quantity">Quantity: 2</span>
+                            <span th:text="|Price: ${oi.price}|" class="item-price">Price: $20.00</span>
+                            <span th:text="|Total Price: ${oi.totalPrice}|" class="item-price">Price: $20.00</span>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+
+<!--            <table class="table">-->
+<!--                <thead>-->
+<!--                    <tr>-->
+<!--                        <th>Order ID</th>-->
+<!--                        <th>Date</th>-->
+<!--&lt;!&ndash;                        <th>Total</th>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <th>Status</th>&ndash;&gt;-->
+<!--                    </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="order : ${orders}">-->
+<!--                    &lt;!&ndash; Repeat this block for each order &ndash;&gt;-->
+<!--                    <tr >-->
+<!--                        <td th:text="|Order: ${order.id}|"></td>-->
+<!--                        <td th:text="|Date: ${order.orderDate}|"></td>-->
+<!--                    </tr>-->
+<!--                    -->
+<!--                    <tr th:each="oi : ${order.getOrderItems()}">-->
+<!--                        <td th:text="|Quantity: ${oi.quantity}|"></td>-->
+<!--                        <td th:text="|Price: ${oi.price}|"></td>-->
+<!--                        <td th:text="|Total Price: ${oi.price}|"></td>-->
+<!--                    </tr>-->
+<!--                    &lt;!&ndash; End of order block &ndash;&gt;-->
+<!--                </tbody>-->
+<!--            </table>-->
         </div>
     </main>
 

@@ -4,7 +4,9 @@ import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
+import bg.softuni.Online.Book.Store.model.dto.review.ReviewCommentDTO;
 import bg.softuni.Online.Book.Store.service.BookService;
+import bg.softuni.Online.Book.Store.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,15 +19,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
     private final BookService bookService;
+    private final ReviewService reviewService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookService bookService, ReviewService reviewService) {
         this.bookService = bookService;
+        this.reviewService = reviewService;
     }
 
 
@@ -57,17 +62,24 @@ public class BookController {
         Page<AllBooksDTO> allBooksDTO = bookService.findAllBooks(pageable);
         ModelAndView modelAndView = new ModelAndView("all-books");
         modelAndView.addObject("allBooksDTO", allBooksDTO);
+
         return modelAndView;
     }
 
     @GetMapping("/details/{id}")
     public ModelAndView details(@PathVariable("id") Long id) {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
+        List<ReviewCommentDTO> bookReviews = reviewService.getBookReviews(id);
         ModelAndView modelAndView = new ModelAndView("/book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
+        modelAndView.addObject("reviews", bookReviews);
         return modelAndView;
     }
 
+    // Using String and Model here instead of ModelAndView because
+    // when im using ModelAndView and im redirected with binding result errors
+    // not getting the expected page with error messages but getting the
+    // actual page when first go to edit book with fields from book
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Long id, Model model) {
         EditBookDTO editBookDTO = bookService.findBookByIdEdit(id);
@@ -78,7 +90,8 @@ public class BookController {
     }
 
     @PatchMapping("/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") Long id, @Valid EditBookDTO editBookDTO, BindingResult bindingResult,
+    public ModelAndView edit(@PathVariable("id") Long id, @Valid EditBookDTO editBookDTO,
+                             BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editBookDTO", editBookDTO);
@@ -91,6 +104,7 @@ public class BookController {
 
         return new ModelAndView("redirect:/books/details/" + updatedBookId);
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) {
