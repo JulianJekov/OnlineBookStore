@@ -19,6 +19,7 @@ public class OAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 
     public OAuthSuccessHandler(UserService userService) {
         this.userService = userService;
+        setDefaultTargetUrl("/home");
     }
 
     @Override
@@ -32,7 +33,6 @@ public class OAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
                 userService.createUserIfNotExist(email, name);
             }
             authentication = userService.login(email);
-            response.sendRedirect("/home");
         }
         super.onAuthenticationSuccess(request, response, authentication);
     }

@@ -66,11 +66,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Long editBook(EditBookDTO editBookDTO) {
-        Book book = modelMapper.map(editBookDTO, Book.class);
-        book.setImageUrl(imageCloudService.uploadImg(editBookDTO.getImageUrl()));
-        bookRepository.save(book);
+        Long id = editBookDTO.getId();
+        Book existingBook = bookRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id))
+        );
+        modelMapper.map(editBookDTO, existingBook);
+        existingBook.setImageUrl(imageCloudService.uploadImg(editBookDTO.getImageUrl()));
+        bookRepository.save(existingBook);
 
-        return book.getId();
+        return existingBook.getId();
     }
 
     @Override
@@ -81,7 +85,6 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteBook(Long id) {
-        cartItemRepository.deleteByBookId(id);
         bookRepository.deleteById(id);
         //TODO: handle the reviews that book will have
         //TODO: test orphanRemoval

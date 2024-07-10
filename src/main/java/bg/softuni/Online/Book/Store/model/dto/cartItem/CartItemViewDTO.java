@@ -1,12 +1,11 @@
 package bg.softuni.Online.Book.Store.model.dto.cartItem;
 
-import java.math.BigDecimal;
-
 public class CartItemViewDTO {
     private Long id;
     private String bookTitle;
+    private String bookImageUrl;
     private int quantity;
-    private double bookPrice;
+    private double price;
     private double totalPrice;
 
     public CartItemViewDTO() {
@@ -36,17 +35,17 @@ public class CartItemViewDTO {
 
     public CartItemViewDTO setQuantity(int quantity) {
         this.quantity = quantity;
-        this.totalPrice = this.quantity * this.bookPrice;
+        this.totalPrice = this.quantity * this.price;
         return this;
     }
 
-    public double getBookPrice() {
-        return bookPrice;
+    public double getPrice() {
+        return price;
     }
 
-    public CartItemViewDTO setBookPrice(double bookPrice) {
-        this.bookPrice = bookPrice;
-        this.totalPrice = this.bookPrice * this.quantity;
+    public CartItemViewDTO setPrice(double price) {
+        this.price = price;
+        this.totalPrice = this.price * this.quantity;
         return this;
     }
 
@@ -59,4 +58,12 @@ public class CartItemViewDTO {
         return this;
     }
 
+    public String getBookImageUrl() {
+        return bookImageUrl;
+    }
+
+    public CartItemViewDTO setBookImageUrl(String bookImageUrl) {
+        this.bookImageUrl = bookImageUrl;
+        return this;
+    }
 }

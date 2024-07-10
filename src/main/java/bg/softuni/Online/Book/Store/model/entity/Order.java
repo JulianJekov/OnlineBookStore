@@ -2,6 +2,7 @@ package bg.softuni.Online.Book.Store.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
     public Order() {
     }
@@ -39,11 +40,11 @@ public class Order extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public Order setOrderDate(LocalDateTime orderDate) {
+    public Order setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
         return this;
     }
