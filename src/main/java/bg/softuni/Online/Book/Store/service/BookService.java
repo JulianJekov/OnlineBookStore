@@ -26,4 +26,6 @@ public interface BookService {
     Optional<Book> findByISBN(String isbn);
 
     void deleteBook(Long id);
+
+    TopRatedBookDTO getTopRated();
 }

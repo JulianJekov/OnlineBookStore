@@ -4,9 +4,8 @@ import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
-import bg.softuni.Online.Book.Store.model.dto.review.ReviewCommentDTO;
+import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.service.BookService;
-import bg.softuni.Online.Book.Store.service.ReviewService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,18 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @RequestMapping("/books")
 public class BookController {
 
     private final BookService bookService;
-    private final ReviewService reviewService;
 
-    public BookController(BookService bookService, ReviewService reviewService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
-        this.reviewService = reviewService;
     }
 
 
@@ -69,10 +65,8 @@ public class BookController {
     @GetMapping("/details/{id}")
     public ModelAndView details(@PathVariable("id") Long id) {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
-        List<ReviewCommentDTO> bookReviews = reviewService.getBookReviews(id);
         ModelAndView modelAndView = new ModelAndView("/book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
-        modelAndView.addObject("reviews", bookReviews);
         return modelAndView;
     }
 

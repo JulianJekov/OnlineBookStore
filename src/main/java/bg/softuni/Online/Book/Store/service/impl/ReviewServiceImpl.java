@@ -14,10 +14,8 @@ import bg.softuni.Online.Book.Store.service.ReviewService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.List;
 
-import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_NOT_FOUND;
+import static bg.softuni.Online.Book.Store.constants.Exceptions.*;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
@@ -35,31 +33,17 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public boolean createReview(ReviewDTO reviewDTO, BookStoreUserDetails userDetails) {
-        String bookTitle = reviewDTO.getBookTitle();
-        Long id = userDetails.getId();
+    public void createReview(ReviewDTO reviewDTO, BookStoreUserDetails userDetails) {
+        Long bookId = reviewDTO.getBookId();
+        Long userId = userDetails.getId();
 
-        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
-        Book book = bookRepository.findByTitle(bookTitle).orElse(null);
+        User user = userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
+        Book book = bookRepository.findById(bookId).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, bookId)));
 
-        if (book == null) {
-            return false;
-        }
-
-        Review review = new Review();
-        review.setBook(book);
-        review.setCreated(LocalDate.now());
-        review.setComment(reviewDTO.getComment());
+        Review review = modelMapper.map(reviewDTO, Review.class);
         review.setUser(user);
+        review.setBook(book);
         reviewRepository.save(review);
-        return true;
-    }
-
-    @Override
-    public List<ReviewCommentDTO> getBookReviews(Long id) {
-        return reviewRepository.findByBookId(id)
-                .stream()
-                .map(review -> modelMapper.map(review, ReviewCommentDTO.class))
-                .toList();
     }
 }

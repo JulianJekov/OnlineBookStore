@@ -1,6 +1,10 @@
 package bg.softuni.Online.Book.Store.model.dto.book;
 
+import bg.softuni.Online.Book.Store.model.dto.review.ReviewDTO;
+import bg.softuni.Online.Book.Store.model.dto.review.ReviewViewDTO;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class BookDetailsDTO {
 
@@ -17,6 +21,8 @@ public class BookDetailsDTO {
     private String isbn;
 
     private BigDecimal price;
+
+    private List<ReviewViewDTO> reviews;
 
     public BookDetailsDTO() {}
 
@@ -80,6 +86,15 @@ public class BookDetailsDTO {
 
     public BookDetailsDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public List<ReviewViewDTO> getReviews() {
+        return reviews;
+    }
+
+    public BookDetailsDTO setReviews(List<ReviewViewDTO> reviews) {
+        this.reviews = reviews;
         return this;
     }
 }
