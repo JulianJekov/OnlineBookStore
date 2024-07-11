@@ -5,11 +5,13 @@ import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
 import bg.softuni.Online.Book.Store.model.entity.Book;
+import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.BookService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,10 +65,11 @@ public class BookController {
     }
 
     @GetMapping("/details/{id}")
-    public ModelAndView details(@PathVariable("id") Long id) {
+    public ModelAndView details(@PathVariable("id") Long id, @AuthenticationPrincipal BookStoreUserDetails userDetails) {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
         ModelAndView modelAndView = new ModelAndView("/book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
+        modelAndView.addObject("details", userDetails.getFullName());
         return modelAndView;
     }
 

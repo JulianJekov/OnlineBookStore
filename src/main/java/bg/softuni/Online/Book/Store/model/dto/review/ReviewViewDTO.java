@@ -3,6 +3,8 @@ package bg.softuni.Online.Book.Store.model.dto.review;
 import java.time.LocalDate;
 
 public class ReviewViewDTO {
+    private Long id;
+
     private String userUsername;
 
     private String comment;
@@ -46,6 +48,15 @@ public class ReviewViewDTO {
 
     public ReviewViewDTO setCreated(LocalDate created) {
         this.created = created;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ReviewViewDTO setId(Long id) {
+        this.id = id;
         return this;
     }
 }

@@ -1,9 +1,6 @@
 package bg.softuni.Online.Book.Store.service;
 
-import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
-import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
-import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
-import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
+import bg.softuni.Online.Book.Store.model.dto.book.*;
 import bg.softuni.Online.Book.Store.model.entity.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

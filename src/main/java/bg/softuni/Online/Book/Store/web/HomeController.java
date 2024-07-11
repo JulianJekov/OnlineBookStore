@@ -1,7 +1,6 @@
 package bg.softuni.Online.Book.Store.web;
 
 import bg.softuni.Online.Book.Store.model.dto.book.TopRatedBookDTO;
-import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.BookService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -39,9 +38,12 @@ public class HomeController {
         } else {
             modelAndView.addObject("welcome", "Anonymous");
         }
+        TopRatedBookDTO topRated = bookService.getTopRated();
 
-        modelAndView.addObject("topRatedBook", bookService.getTopRated());
-
+        if (topRated == null) {
+            modelAndView.addObject("no_reviews", "No Reviews Yet.");
+        }
+        modelAndView.addObject("topRatedBook", topRated);
         return modelAndView;
     }
 }

@@ -78,10 +78,30 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public TopRatedBookDTO getTopRated() {
+        Book book = bookRepository.findTopRatedBook().orElse(null);
+
+        if (book == null) {
+            return null;
+        }
+
+        double averageRating = book.getReviews().stream()
+                .mapToDouble(Review::getRating)
+                .average()
+                .orElse(0.0);
+
+        int reviewCount = book.getReviews().size();
+
+        TopRatedBookDTO topRatedBookDTO = modelMapper.map(book, TopRatedBookDTO.class);
+        topRatedBookDTO.setAverageRating(averageRating);
+        topRatedBookDTO.setReviewCount(reviewCount);
+
+        return topRatedBookDTO;
+    }
+
+    @Override
     @Transactional
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
-        //TODO: handle the reviews that book will have
-        //TODO: test orphanRemoval
     }
 }

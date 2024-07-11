@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         if (this.userRepository.count() == 0) {
             user.setRoles(roleRepository.findAll());
         } else {
-            user.setRoles(List.of(this.roleRepository.findByName(UserRole.USER)));
+            user.setRoles(List.of(roleRepository.findByName(UserRole.USER)));
         }
     }
 }

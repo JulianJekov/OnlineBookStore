@@ -13,7 +13,8 @@ public class BookStoreUserDetails extends User {
 
     public BookStoreUserDetails(
             String username, String password,
-            Collection<? extends GrantedAuthority> authorities, Long id,
+            Collection<? extends GrantedAuthority> authorities,
+            Long id,
             String firstName,
             String lastName) {
         super(username, password, authorities);

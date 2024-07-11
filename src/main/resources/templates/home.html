@@ -12,42 +12,49 @@
 </head>
 
 <body>
-    <header class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <h1 class="h2">Welcome to Our Bookstore</h1>
-        </div>
-    </header>
+<header class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <h1 class="h2">Welcome to Our Bookstore</h1>
+    </div>
+</header>
 
-    <div th:replace="~{fragments/navigation}"></div>
+<div th:replace="~{fragments/navigation}"></div>
 
-    <main class="container mt-4">
-       <div class="container-fluid mb-5">
-           <h5 class="text-center text-dark mt-5">
-               Welcome to Book Store,
-               <th:block th:text="${welcome}"></th:block>
-           </h5>
-       </div>
-        <h2 class="text-center">Most Commented Book</h2>
-        <div class="row justify-content-center">
-            <div class="col-md-4 col-lg-4 mb-4">
-                <div class="card h-100">
-                    <img src="/images/352202-admin.jpg" class="card-img-top" alt="Most Commented Book">
-                    <div class="card-body">
-                        <h5 class="card-title">Most Commented Book Title</h5>
-                        <p class="card-text">Author Name</p>
-                        <p class="card-text">Number of Comments: 123</p>
-                        <a th:href="@{/books/details}" class="btn btn-warning">View Details</a>
-                    </div>
+<main class="container mt-4">
+    <div class="container-fluid mb-5">
+        <h5 class="text-center text-dark mt-5">
+            Welcome to Book Store,
+            <th:block th:text="${welcome}"></th:block>
+        </h5>
+    </div>
+    <h2 class="text-center">Most Rated Book</h2>
+    <div
+            th:if="${topRatedBook}" class="row justify-content-center"
+            th:object="${topRatedBook}"
+    >
+        <div class="col-md-4 col-lg-4 mb-4 image-container">
+            <div class="card h-100">
+                <img th:src="*{imageUrl}" class="img-thumbnail" alt="Most Commented Book">
+                <div class="card-body">
+                    <h5 th:text="|Title: *{title}|" class="card-title">Most Commented Book Title</h5>
+                    <p th:text="|Authro: *{author}|" class="card-text">Author Name</p>
+                    <p th:text="|Average Rating: *{averageRating}|" class="card-text">Average rating: 123</p>
+                    <p th:text="|Total Comments: *{reviewCount}|" class="card-text">Total Comments: 123</p>
+                    <a th:href="@{/books/details/{bookId}(bookId = *{id})}" class="btn btn-warning">View Details</a>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <div th:if="${not #strings.isEmpty(no_reviews)}" class="text-center mt-5">
+        <h1 th:text="${no_reviews}"></h1>
+    </div>
+</main>
 
-    <div th:replace="~{fragments/footer}"></div>
+<div th:replace="~{fragments/footer}"></div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 
 </html>

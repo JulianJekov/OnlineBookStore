@@ -37,9 +37,8 @@ public class BookStoreDetailsService implements UserDetailsService {
                 user.getPassword(),
                 mapRoles(user.getRoles()),
                 user.getId(),
-                user.getLastName(),
-                user.getLastName()
-                );
+                user.getFirstName(),
+                user.getLastName());
     }
 
     private List<SimpleGrantedAuthority> mapRoles(List<Role> roles) {
