@@ -1,6 +1,8 @@
 package bg.softuni.Online.Book.Store.service;
 
+import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
+import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import org.springframework.security.core.Authentication;
 
@@ -19,4 +21,7 @@ public interface UserService {
     void createUserIfNotExist(String email, String name);
 
     Authentication login(String email);
+
+    UserProfileDTO getUserDetails(Long id);
+
 }

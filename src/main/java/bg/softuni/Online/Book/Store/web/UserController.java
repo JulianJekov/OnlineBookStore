@@ -1,14 +1,17 @@
 package bg.softuni.Online.Book.Store.web;
 
+import bg.softuni.Online.Book.Store.exceptions.FieldError;
+import bg.softuni.Online.Book.Store.exceptions.ValidationException;
+import bg.softuni.Online.Book.Store.model.dto.user.ChangePasswordDTO;
+import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
+import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.UserService;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -62,7 +65,12 @@ public class UserController {
     }
 
     @GetMapping("/profile")
-    public ModelAndView profile() {
-        return new ModelAndView("profile");
+    public ModelAndView profile(@AuthenticationPrincipal BookStoreUserDetails userDetails) {
+        Long id = userDetails.getId();
+        ModelAndView modelAndView = new ModelAndView("/profile");
+        UserProfileDTO userProfileDTO = userService.getUserDetails(id);
+        modelAndView.addObject("userProfileDTO", userProfileDTO);
+        return modelAndView;
+    }
     }
 }

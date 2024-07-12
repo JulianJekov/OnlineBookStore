@@ -64,6 +64,10 @@ html, body {
     margin-bottom: 20px;
 }
 
+.profile {
+    text-align: center;
+}
+
 .form-container {
     margin: 40px auto;
     max-width: 600px;
@@ -97,5 +101,11 @@ html, body {
     object-fit: fill;
 }
 
+.profile-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
 
 
