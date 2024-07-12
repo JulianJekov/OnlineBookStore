@@ -72,5 +72,38 @@ public class UserController {
         modelAndView.addObject("userProfileDTO", userProfileDTO);
         return modelAndView;
     }
+
+    @GetMapping("/edit-profile/{id}")
+    public ModelAndView editProfile(@PathVariable("id") Long id, @AuthenticationPrincipal BookStoreUserDetails userDetails) {
+        ModelAndView modelAndView = new ModelAndView("/edit-profile");
+        UserProfileDTO userProfileDTO = userService.getUserDetails(id);
+        if (!modelAndView.getModel().containsKey("userProfileDTO")) {
+            modelAndView.addObject("userProfileDTO", userProfileDTO);
+        }
+        return modelAndView;
+    }
+
+    @PatchMapping("/edit-profile/{id}")
+    public ModelAndView editProfile(@Valid UserProfileDTO userProfileDTO, BindingResult bindingResult,
+                                    RedirectAttributes redirectAttributes) {
+        try {
+            userService.validateUserProfile(userProfileDTO);
+        } catch (ValidationException e) {
+            for (FieldError fieldError : e.getFieldErrors()) {
+                bindingResult.rejectValue(fieldError.getFieldName(), "error." + fieldError.getFieldName(), fieldError.getErrorMessage());
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("userProfileDTO", userProfileDTO);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userProfileDTO", bindingResult);
+            return new ModelAndView("edit-profile");
+        }
+
+        userService.editProfile(userProfileDTO);
+
+        return new ModelAndView("/profile");
+    }
+
     }
 }

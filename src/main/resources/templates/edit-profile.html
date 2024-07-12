@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore - Edit Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+<header class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <h1 class="h2">Edit Profile</h1>
+    </div>
+</header>
+
+<div th:replace="~{fragments/navigation}"></div>
+
+<main class="my-main">
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center">Edit Profile</h2>
+            <form
+                    th:method="PATCH"
+                    th:object="${userProfileDTO}"
+                    th:action="@{/users/edit-profile/{id}(id = *{id})}"
+                >
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="Enter first name"
+                           th:name="firstName"
+                           th:field="*{firstName}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{firstName}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Enter last name"
+                           th:name="lastName"
+                           th:field="*{lastName}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{lastName}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter username"
+                           th:name="username"
+                           th:field="*{username}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{username}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" class="form-control" id="age" placeholder="Enter age"
+                           th:name="age"
+                           th:field="*{age}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{age}" class="invalid-feedback danger"></small>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                           th:name="email"
+                           th:field="*{email}"
+                           th:errorclass="is-invalid"
+                    >
+                    <small th:errors="*{email}" class="invalid-feedback danger"></small>
+                </div>
+
+                <button type="submit" class="btn btn-warning btn-block">Update Profile</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<div th:replace="~{fragments/footer}"></div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

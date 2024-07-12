@@ -24,4 +24,7 @@ public interface UserService {
 
     UserProfileDTO getUserDetails(Long id);
 
+    void validateUserProfile(UserProfileDTO userProfileDTO);
+
+    void editProfile(UserProfileDTO userProfileDTO);
 }
