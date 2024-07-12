@@ -69,7 +69,7 @@
             <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
             <input type="hidden" name="bookTitle" th:value="${bookDetailsDTO.title}">
             <div class="form-group">
-                <label for="rating">Rating</label>
+                <label for="rating" class="font-weight-bold">Rating</label>
                 <select class="form-control" id="rating" name="rating">
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -79,7 +79,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="comment">Comment</label>
+                <label for="comment" class="font-weight-bold">Comment</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-warning">Submit Review</button>
@@ -95,12 +95,12 @@
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${review.rating + ' stars'}">Rating</h6>
                     <p class="card-text" th:text="${review.comment}">Review comment goes here.</p>
                     <p class="card-text"><small class="text-muted" th:text="${review.created}">Date</small></p>
-                    <form sec:authorize="hasRole('ADMIN')"
+                    <form th:if="${#authorization.expression('hasRole(''ADMIN'')') and details != review.userId}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
-                    <form th:if="${details == review.userUsername}"
+                    <form th:if="${details == review.userId}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
                         <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
                         <button type="submit" class="btn btn-danger">Delete</button>

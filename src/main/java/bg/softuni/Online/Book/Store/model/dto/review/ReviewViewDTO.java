@@ -5,6 +5,8 @@ import java.time.LocalDate;
 public class ReviewViewDTO {
     private Long id;
 
+    private Long userId;
+
     private String userUsername;
 
     private String comment;
@@ -57,6 +59,15 @@ public class ReviewViewDTO {
 
     public ReviewViewDTO setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public ReviewViewDTO setUserId(Long userId) {
+        this.userId = userId;
         return this;
     }
 }
