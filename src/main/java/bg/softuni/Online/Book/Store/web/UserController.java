@@ -30,6 +30,11 @@ public class UserController {
         return new UserRegisterDTO();
     }
 
+    @ModelAttribute("changePasswordDTO")
+    public ChangePasswordDTO changePasswordDTO() {
+        return new ChangePasswordDTO();
+    }
+
     @GetMapping("/register")
     public ModelAndView register() {
         return new ModelAndView("register");
@@ -105,5 +110,8 @@ public class UserController {
         return new ModelAndView("/profile");
     }
 
+    @GetMapping("/change-password/{id}")
+    public ModelAndView changePassword(@PathVariable("id") Long id) {
+        return new ModelAndView("/change-password");
     }
 }
