@@ -13,6 +13,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     Optional<Book> findByTitle(String title);
 
+
+    Optional<Book> findByTitleAndIdNot(String title, Long id);
+
     Optional<Book> findByIsbn(String isbn);
 
 
@@ -24,7 +27,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                         HAVING AVG(r.rating) = (SELECT MAX(avg_rating)
                         FROM (SELECT AVG(r.rating) AS avg_rating
                         FROM reviews r
-                        GROUP BY r.book_id) AS avg_ratings)""",
+                        GROUP BY r.book_id) AS avg_ratings)
+                        LIMIT 1
+                        """,
             nativeQuery = true)
     Optional<Book> findTopRatedBook();
 }
