@@ -28,6 +28,7 @@
                 <thead>
                     <tr>
                         <th>Book</th>
+                        <th>Image</th>
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Total</th>
@@ -37,6 +38,9 @@
                 <tbody >
                     <tr th:each="cart : ${shoppingCartDTO.cartItems}">
                         <td th:text="${cart.bookTitle}">Book Title</td>
+                        <td>
+                            <img th:src="${cart.bookImageUrl}" class="item-img" alt="">
+                        </td>
                         <td th:text="${cart.quantity}">1</td>
                         <td th:text="${cart.price}">$19.99</td>
                         <td th:text="${cart.totalPrice}">$19.99</td>

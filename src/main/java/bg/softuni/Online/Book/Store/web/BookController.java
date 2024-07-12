@@ -4,7 +4,6 @@ import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.EditBookDTO;
-import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.BookService;
 import jakarta.validation.Valid;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,21 +67,18 @@ public class BookController {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
         ModelAndView modelAndView = new ModelAndView("/book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
-        modelAndView.addObject("details", userDetails.getFullName());
+        modelAndView.addObject("details", userDetails.getId());
         return modelAndView;
     }
 
-    // Using String and Model here instead of ModelAndView because
-    // when im using ModelAndView and im redirected with binding result errors
-    // not getting the expected page with error messages but getting the
-    // actual page when first go to edit book with fields from book
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") Long id, Model model) {
+    public ModelAndView edit(@PathVariable("id") Long id) {
         EditBookDTO editBookDTO = bookService.findBookByIdEdit(id);
-        if (!model.containsAttribute("editBookDTO")) {
-            model.addAttribute("editBookDTO", editBookDTO);
+        ModelAndView modelAndView = new ModelAndView("/edit-book");
+        if (!modelAndView.getModel().containsKey("editBookDTO")) {
+            modelAndView.addObject("editBookDTO", editBookDTO);
         }
-        return "edit-book";
+        return modelAndView;
     }
 
     @PatchMapping("/edit/{id}")
@@ -94,9 +89,8 @@ public class BookController {
             redirectAttributes.addFlashAttribute("editBookDTO", editBookDTO);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.editBookDTO", bindingResult);
-            return new ModelAndView("redirect:/books/edit/" + id);
+            return new ModelAndView("edit-book");
         }
-
         Long updatedBookId = bookService.editBook(editBookDTO);
 
         return new ModelAndView("redirect:/books/details/" + updatedBookId);
