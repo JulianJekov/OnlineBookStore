@@ -45,11 +45,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart saveShoppingCart(ShoppingCart shoppingCart) {
-        return shoppingCartRepository.save(shoppingCart);
-    }
-
-    @Override
     public void addItemToCart(CartItemDTO cartItemDTO, BookStoreUserDetails userDetails) {
         Long userId = userDetails.getId();
         Long bookId = cartItemDTO.getBookId();
@@ -98,9 +93,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCartRepository.save(shoppingCart);
     }
 
+    private ShoppingCart saveShoppingCart(ShoppingCart shoppingCart) {
+        return shoppingCartRepository.save(shoppingCart);
+    }
+
     private ShoppingCart createShoppingCart(User user) {
         ShoppingCart shoppingCart = new ShoppingCart();
         shoppingCart.setUser(user);
+        user.setShoppingCart(shoppingCart);
         return saveShoppingCart(shoppingCart);
     }
 }

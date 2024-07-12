@@ -10,8 +10,6 @@ public interface ShoppingCartService {
 
     ShoppingCart getShoppingCartByUser(User user);
 
-    ShoppingCart saveShoppingCart(ShoppingCart shoppingCart);
-
     void addItemToCart(CartItemDTO cartItemDTO, BookStoreUserDetails userDetails);
 
     ShoppingCartDTO viewShoppingCart(BookStoreUserDetails userDetails);
