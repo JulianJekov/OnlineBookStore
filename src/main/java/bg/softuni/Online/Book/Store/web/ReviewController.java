@@ -5,6 +5,8 @@ import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.ReviewService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,5 +26,11 @@ public class ReviewController {
                                      @AuthenticationPrincipal BookStoreUserDetails userDetails) {
         reviewService.createReview(reviewDTO, userDetails);
         return new ModelAndView("redirect:/books/details/" + reviewDTO.getBookId());
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ModelAndView reviewDelete(@PathVariable("id") Long id, Long bookId) {
+        reviewService.delete(id);
+        return new ModelAndView("redirect:/books/details/" + bookId);
     }
 }

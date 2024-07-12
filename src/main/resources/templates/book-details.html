@@ -102,6 +102,7 @@
 
                     <form th:if="${details == review.userUsername}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
+                        <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 

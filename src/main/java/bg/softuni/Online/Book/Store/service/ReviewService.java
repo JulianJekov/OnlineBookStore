@@ -5,4 +5,6 @@ import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 
 public interface ReviewService {
     void createReview(ReviewDTO reviewDTO, BookStoreUserDetails userDetails);
+
+    void delete(Long id);
 }
