@@ -39,12 +39,12 @@
                     <a href="#" class="text-danger mr-2 text-decoration-none"><i class="fab fa-instagram"></i> Instagram</a>
                 </p>
                 <div class="d-flex justify-content-center m-2 btn-group">
-                    <form th:action="@{/users/edit-profile/{id} (id= *{id})}" th:method="GET">
+                    <form th:action="@{/users/edit-profile}" th:method="GET">
                         <button type="submit" class="btn btn-warning mr-3">
                             Edit Profile
                         </button>
                     </form>
-                    <form th:action="@{/users/change-password/{id} (id= *{id})}" th:method="GET">
+                    <form th:action="@{/users/change-password}" th:method="GET">
                         <button type="submit" class="btn btn-danger">
                             Change Password
                         </button>

@@ -67,7 +67,7 @@ public class BookController {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
         ModelAndView modelAndView = new ModelAndView("/book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
-        modelAndView.addObject("details", userDetails.getId());
+        modelAndView.addObject("userId", userDetails.getId());
         return modelAndView;
     }
 

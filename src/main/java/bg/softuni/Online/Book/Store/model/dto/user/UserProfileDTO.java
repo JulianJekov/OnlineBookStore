@@ -1,7 +1,5 @@
 package bg.softuni.Online.Book.Store.model.dto.user;
 
-import bg.softuni.Online.Book.Store.validations.uniqueEmail.UniqueEmail;
-import bg.softuni.Online.Book.Store.validations.uniqueUsername.UniqueUsername;
 import jakarta.validation.constraints.*;
 
 import static bg.softuni.Online.Book.Store.constants.ValidationMessages.*;

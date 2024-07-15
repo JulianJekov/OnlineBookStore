@@ -4,6 +4,7 @@ import bg.softuni.Online.Book.Store.events.UserRegisterEvent;
 import bg.softuni.Online.Book.Store.exceptions.FieldError;
 import bg.softuni.Online.Book.Store.exceptions.ValidationException;
 import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
+import bg.softuni.Online.Book.Store.model.dto.user.ChangePasswordDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.model.entity.ShoppingCart;
@@ -154,6 +155,30 @@ public class UserServiceImpl implements UserService {
                 () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, id)));
         modelMapper.map(userProfileDTO, user);
         saveUser(user);
+    }
+
+    @Override
+    public void changePassword(Long id, ChangePasswordDTO changePasswordDTO) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, id)));
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getPassword()));
+        userRepository.save(user);
+    }
+
+    @Override
+    public void validateOldPassword(Long id, ChangePasswordDTO changePasswordDTO) {
+        User user = userRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, id)));
+        String oldPassword = changePasswordDTO.getOldPassword();
+        String password = user.getPassword();
+        List<FieldError> errors = new ArrayList<>();
+
+        if (!passwordEncoder.matches(oldPassword, password)) {
+            errors.add(new FieldError("oldPassword", "Old password does not match!"));
+        }
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
     }
 
     private void setUserShoppingCart(User user) {

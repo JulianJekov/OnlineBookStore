@@ -51,6 +51,9 @@
                     </div>
                     <button type="submit" class="btn btn-warning btn-block">Login</button>
                 </form>
+                <div th:if="${param.passwordChangeSuccess}">
+                    <p class="alert alert-success mt-3">Password changed successfully. Please log in with your new password.</p>
+                </div>
                 <hr>
                 <div class="row">
                 <div class="text-center col-lg-6 mb-1">

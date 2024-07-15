@@ -95,12 +95,12 @@
                     <h6 class="card-subtitle mb-2 text-muted" th:text="${review.rating + ' stars'}">Rating</h6>
                     <p class="card-text" th:text="${review.comment}">Review comment goes here.</p>
                     <p class="card-text"><small class="text-muted" th:text="${review.created}">Date</small></p>
-                    <form th:if="${#authorization.expression('hasRole(''ADMIN'')') and details != review.userId}"
+                    <form th:if="${#authorization.expression('hasRole(''ADMIN'')') and userId != review.userId}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
-                    <form th:if="${details == review.userId}"
+                    <form th:if="${userId == review.userId}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
                         <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
                         <button type="submit" class="btn btn-danger">Delete</button>

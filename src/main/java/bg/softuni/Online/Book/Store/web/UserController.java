@@ -7,13 +7,22 @@ import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.springframework.data.jpa.domain.AbstractPersistable_;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @RequestMapping("/users")
@@ -78,9 +87,10 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping("/edit-profile/{id}")
-    public ModelAndView editProfile(@PathVariable("id") Long id, @AuthenticationPrincipal BookStoreUserDetails userDetails) {
+    @GetMapping("/edit-profile")
+    public ModelAndView editProfile(@AuthenticationPrincipal BookStoreUserDetails userDetails) {
         ModelAndView modelAndView = new ModelAndView("/edit-profile");
+        Long id = userDetails.getId();
         UserProfileDTO userProfileDTO = userService.getUserDetails(id);
         if (!modelAndView.getModel().containsKey("userProfileDTO")) {
             modelAndView.addObject("userProfileDTO", userProfileDTO);
@@ -88,7 +98,7 @@ public class UserController {
         return modelAndView;
     }
 
-    @PatchMapping("/edit-profile/{id}")
+    @PatchMapping("/edit-profile")
     public ModelAndView editProfile(@Valid UserProfileDTO userProfileDTO, BindingResult bindingResult,
                                     RedirectAttributes redirectAttributes) {
         try {
@@ -110,8 +120,44 @@ public class UserController {
         return new ModelAndView("/profile");
     }
 
-    @GetMapping("/change-password/{id}")
-    public ModelAndView changePassword(@PathVariable("id") Long id) {
+    @GetMapping("/change-password")
+    public ModelAndView changePassword() {
         return new ModelAndView("/change-password");
+    }
+
+    @PatchMapping("/change-password")
+    public ModelAndView changePassword(@AuthenticationPrincipal BookStoreUserDetails userDetails,
+                                           @Valid ChangePasswordDTO changePasswordDTO,
+                                       BindingResult bindingResult,
+                                       RedirectAttributes redirectAttributes,
+                                       HttpServletRequest request,
+                                       HttpServletResponse response) {
+        Long id = userDetails.getId();
+        try {
+            userService.validateOldPassword(id, changePasswordDTO);
+        } catch (ValidationException e) {
+            for (FieldError fieldError : e.getFieldErrors()) {
+                bindingResult.rejectValue(
+                        fieldError.getFieldName(),
+                        "error." + fieldError.getFieldName(),
+                        fieldError.getErrorMessage());
+            }
+        }
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("changePasswordDTO", changePasswordDTO);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.changePasswordDTO", bindingResult);
+            return new ModelAndView("redirect:/users/change-password");
+        }
+        userService.changePassword(id, changePasswordDTO);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+        }
+
+        return new ModelAndView("redirect:/users/login?passwordChangeSuccess");
     }
 }
