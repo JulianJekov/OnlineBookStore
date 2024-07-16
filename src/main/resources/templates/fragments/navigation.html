@@ -4,6 +4,7 @@
 >
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Navigation</title>
 </head>
 <body>
@@ -11,10 +12,12 @@
     <div class="container">
         <a class="navbar-brand navbar-collapse"
            sec:authorize="isAuthenticated()"
-           th:href="@{/home}">Bookstore</a>
+           th:href="@{/home}"
+           th:text="#{nav_bar_bookstore}">Online Bookstore</a>
         <a class="navbar-brand navbar-collapse"
            sec:authorize="isAnonymous()"
-           th:href="@{/}">Bookstore</a>
+           th:href="@{/}"
+           th:text="#{nav_bar_bookstore}">Online Bookstore</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -22,36 +25,74 @@
         <div class="collapse navbar-collapse justify-content-between font-weight-bold" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/books/all}">All Books</a>
+                    <a class="nav-link"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/books/all}"
+                       th:text="#{nav_bar_all_books}">All Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/order/history}">Order History</a>
+                    <a class="nav-link"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/order/history}"
+                       th:text="#{nav_bar_order_history}">Order History</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/users/profile}">Profile</a>
+                    <a class="nav-link"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/users/profile}"
+                       th:text="#{nav_bar_profile}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/cart}">Shopping Cart</a>
+                    <a class="nav-link"
+                       sec:authorize="isAuthenticated()"
+                       th:href="@{/cart}"
+                       th:text="#{nav_bar_shopping_cart}">Shopping Cart</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link"
                        sec:authorize="hasRole('ADMIN')"
-                       th:href="@{/books/add}">Add Book</a>
+                       th:href="@{/books/add}"
+                       th:text="#{nav_bar_add_book}">Add Book</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/users/register}">Register</a>
+                    <a class="nav-link"
+                       sec:authorize="!isAuthenticated()"
+                       th:href="@{/users/register}"
+                       th:text="#{nav_bar_register}">Register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/users/login}">Login</a>
+                    <a class="nav-link"
+                       sec:authorize="!isAuthenticated()"
+                       th:href="@{/users/login}"
+                       th:text="#{nav_bar_login}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/about}">About Us</a>
+                    <a class="nav-link"
+                       sec:authorize="!isAuthenticated()"
+                       th:href="@{/about}"
+                       th:text="#{nav_bar_about_us}">About Us</a>
                 </li>
                 <li class="nav-item">
                     <form th:action="@{/users/logout}" th:method="POST">
-                        <input type="submit" class="nav-link btn btn-link font-weight-bold"  sec:authorize="isAuthenticated()" value="Logout">
+                        <input type="submit" class="nav-link btn btn-link font-weight-bold"
+                               sec:authorize="isAuthenticated()"
+                               th:value="#{nav_bar_logout}">
                     </form>
                 </li>
+
+                <li class="nav-item">
+                    <form th:method="GET" class="form-inline">
+                        <label class="nav-link" for="lang"
+                               th:text="#{nav_bar_language}"
+                        >Language</label>
+                        <select class="nav-link form-control" id="lang" name="lang"
+                                onchange="this.form.submit()">
+                            <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                            <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
+                        </select>
+                    </form>
+                </li>
+
             </ul>
         </div>
     </div>
