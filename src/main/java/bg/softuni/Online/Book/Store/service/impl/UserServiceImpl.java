@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
     private final ApplicationEventPublisher eventPublisher;
     private final ShoppingCartService shoppingCartService;
     private final BookStoreDetailsService bookStoreDetailsService;
+    private final EmailService emailService;
 
     public UserServiceImpl(UserRepository userRepository,
                            ModelMapper modelMapper,
@@ -48,7 +49,8 @@ public class UserServiceImpl implements UserService {
                            RoleRepository roleRepository,
                            ApplicationEventPublisher eventPublisher,
                            ShoppingCartService shoppingCartService,
-                           BookStoreDetailsService bookStoreDetailsService) {
+                           BookStoreDetailsService bookStoreDetailsService,
+                           EmailService emailService) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
@@ -56,6 +58,7 @@ public class UserServiceImpl implements UserService {
         this.eventPublisher = eventPublisher;
         this.shoppingCartService = shoppingCartService;
         this.bookStoreDetailsService = bookStoreDetailsService;
+        this.emailService = emailService;
     }
 
     @Override
@@ -63,11 +66,12 @@ public class UserServiceImpl implements UserService {
     public void register(UserRegisterDTO userRegisterDTO) {
         encodePassword(userRegisterDTO);
         User user = modelMapper.map(userRegisterDTO, User.class);
-        // TODO: send activation email
-        user.setActive(true);
+        user.setActive(false);
+        user.setActivationToken(UUID.randomUUID().toString());
         setRoles(user);
         saveUser(user);
         eventPublisher.publishEvent(new UserRegisterEvent(user));
+        emailService.sendActivationEmail(user);
     }
 
     @Override
@@ -179,6 +183,19 @@ public class UserServiceImpl implements UserService {
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);
         }
+    }
+
+    @Override
+    public boolean activateAccount(String token) {
+        User user = userRepository.findByActivationToken(token);
+        if (user == null) {
+            return false;
+        }
+        user.setActive(true);
+        user.setActivationToken(null);
+        saveUser(user);
+
+        return true;
     }
 
     private void setUserShoppingCart(User user) {

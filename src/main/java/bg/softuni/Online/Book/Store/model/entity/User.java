@@ -44,6 +44,8 @@ public class User extends BaseEntity {
 
     private boolean isActive;
 
+    private String activationToken;
+
     public User() {
     }
 
@@ -153,6 +155,15 @@ public class User extends BaseEntity {
 
     public User setOrders(List<Order> orders) {
         this.orders = orders;
+        return this;
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public User setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
         return this;
     }
 }

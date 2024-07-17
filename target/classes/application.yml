@@ -53,6 +53,11 @@ spring:
                         client-id: ${GOOGLE_ID}
                         client-secret: ${GOOGLE_SECRET}
                         scope: profile, email
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: online.book.store.su@gmail.com
+        password: lxxjdewkwpmpdcuz
 
 logging:
     level:
@@ -70,3 +75,7 @@ cloudinary:
     name: ${CLOUDINARY_NAME}
     api-key: ${CLOUDINARY_API_KEY}
     api-secret: ${CLOUDINARY_API_SECRET}
+
+books:
+    api:
+        baseUrl: "http://localhost:8081"

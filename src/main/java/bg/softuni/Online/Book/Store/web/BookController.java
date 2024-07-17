@@ -53,8 +53,7 @@ public class BookController {
 
 
     @GetMapping("/all")
-    public ModelAndView allBooks(@PageableDefault(size = 3, sort = "id") Pageable pageable,
-                                 @RequestParam(name = "page", defaultValue = "0") int page) {
+    public ModelAndView allBooks(@PageableDefault(size = 3, sort = "id") Pageable pageable) {
         Page<AllBooksDTO> allBooksDTO = bookService.findAllBooks(pageable);
         ModelAndView modelAndView = new ModelAndView("all-books");
         modelAndView.addObject("allBooksDTO", allBooksDTO);

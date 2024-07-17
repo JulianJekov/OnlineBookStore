@@ -31,4 +31,6 @@ public interface UserService {
     void changePassword(Long id, ChangePasswordDTO changePasswordDTO);
 
     void validateOldPassword(Long id, ChangePasswordDTO changePasswordDTO);
+
+    boolean activateAccount(String token);
 }

@@ -10,8 +10,6 @@ import bg.softuni.Online.Book.Store.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.data.jpa.domain.AbstractPersistable_;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @RequestMapping("/users")
@@ -63,7 +60,7 @@ public class UserController {
 
         userService.register(userRegisterDTO);
 
-        return new ModelAndView("redirect:/users/login");
+        return new ModelAndView("redirect:/users/login?confirmEmail");
     }
 
     @GetMapping("/login")

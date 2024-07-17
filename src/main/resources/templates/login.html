@@ -54,6 +54,15 @@
                 <div th:if="${param.passwordChangeSuccess}">
                     <p class="alert alert-success mt-3">Password changed successfully. Please log in with your new password.</p>
                 </div>
+                <div th:if="${param.confirmEmail}">
+                    <p class="alert alert-success mt-3">Registration successfully. Please check your email.</p>
+                </div>
+                <div th:if="${param.activationSuccess}">
+                    <p class="alert alert-success mt-3">Account activated successfully. Please log in.</p>
+                </div>
+                <div th:if="${param.activationFailure}">
+                    <p class="alert alert-danger mt-3">Account activation failed. The token may be invalid or expired.</p>
+                </div>
                 <hr>
                 <div class="row">
                 <div class="text-center col-lg-6 mb-1">
