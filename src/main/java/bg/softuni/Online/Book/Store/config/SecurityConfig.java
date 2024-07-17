@@ -27,10 +27,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain
     securityFilterChain(HttpSecurity http,
-                        CustomAuthenticationSuccessHandler
-                                customAuthenticationSuccessHandler,
+                        CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                        CustomAuthenticationFailureHandler customAuthenticationFailureHandler,
                         OAuthSuccessHandler oAuthSuccessHandler
-                        ) throws Exception {
+    ) throws Exception {
         return
                 http
                         .authorizeHttpRequests(
@@ -40,6 +40,7 @@ public class SecurityConfig {
                                             .requestMatchers("/", "/users/register", "/users/login",
                                                     "/users/login-error", "/about").permitAll()
                                             .requestMatchers("/error").permitAll()
+                                            .requestMatchers("/activate").permitAll()
                                             .requestMatchers("/books/add").hasRole(UserRole.ADMIN.name())
                                             .requestMatchers("/books/edit/**").hasRole(UserRole.ADMIN.name())
                                             .requestMatchers("/books/delete/**").hasRole(UserRole.ADMIN.name())
@@ -54,7 +55,7 @@ public class SecurityConfig {
                                             .passwordParameter("password")
                                             .defaultSuccessUrl("/home", true)
                                             .successHandler(customAuthenticationSuccessHandler)
-                                            .failureForwardUrl("/users/login-error");
+                                            .failureHandler(customAuthenticationFailureHandler);
                                 }
                         )
                         .logout(

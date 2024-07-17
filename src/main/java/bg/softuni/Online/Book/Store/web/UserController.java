@@ -69,9 +69,13 @@ public class UserController {
     }
 
     @PostMapping("/login-error")
-    public ModelAndView onFailure() {
+    public ModelAndView onFailure(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("bad_credentials", true);
+        if (request.getAttribute("not_active") != null) {
+            modelAndView.addObject("not_activated", true);
+        } else if (request.getAttribute("bad_credentials") != null) {
+            modelAndView.addObject("bad_credentials", true);
+        }
         return modelAndView;
     }
 

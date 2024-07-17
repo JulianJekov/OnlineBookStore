@@ -30,6 +30,10 @@
                          class="d-flex justify-content-center errors alert text-danger font-weight-bold">
                         Invalid username or password.
                     </div>
+                    <div th:if="${not_activated}"
+                         class="d-flex justify-content-center errors alert text-danger font-weight-bold">
+                        Your account is not activated. Please check your email for the activation link.
+                    </div>
                     <div class="form-group">
                         <label for="email">Email address</label>
                         <input type="email" class="form-control" id="email" placeholder="Enter email"
