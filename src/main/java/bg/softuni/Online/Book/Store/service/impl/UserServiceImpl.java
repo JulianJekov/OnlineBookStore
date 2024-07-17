@@ -67,12 +67,14 @@ public class UserServiceImpl implements UserService {
         encodePassword(userRegisterDTO);
         User user = modelMapper.map(userRegisterDTO, User.class);
         user.setActive(false);
-        user.setActivationToken(UUID.randomUUID().toString());
+        user.setActivationToken(generateToken());
+        user.setTokenExpiryDate(setExpiryDate());
         setRoles(user);
         saveUser(user);
         eventPublisher.publishEvent(new UserRegisterEvent(user));
         emailService.sendActivationEmail(user);
     }
+
 
     @Override
     public User saveUser(User user) {
@@ -191,11 +193,46 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             return false;
         }
+        if (isTokenExpired(user.getTokenExpiryDate())) {
+            return false;
+        }
         user.setActive(true);
         user.setActivationToken(null);
+        user.setTokenExpiryDate(null);
         saveUser(user);
-
         return true;
+    }
+
+    @Override
+    public boolean requestActivationEmail(String email) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            return false;
+        }
+        User user = optionalUser.get();
+        String newToken = generateToken();
+        LocalDate expiryDate = setExpiryDate();
+        user.setActivationToken(newToken);
+        user.setTokenExpiryDate(expiryDate);
+        saveUser(user);
+        emailService.sendActivationEmail(user);
+        return true;
+    }
+
+
+    private static LocalDate setExpiryDate() {
+        return LocalDate.now().plusDays(1);
+    }
+
+    private static String generateToken() {
+        return UUID.randomUUID().toString();
+    }
+
+    private boolean isTokenExpired(LocalDate tokenExpiryDate) {
+        if (tokenExpiryDate == null) {
+            return true;
+        }
+        return LocalDate.now().isAfter(tokenExpiryDate);
     }
 
     private void setUserShoppingCart(User user) {

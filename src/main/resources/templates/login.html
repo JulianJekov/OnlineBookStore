@@ -28,11 +28,16 @@
                 >
                     <div th:if="${bad_credentials}"
                          class="d-flex justify-content-center errors alert text-danger font-weight-bold">
-                        Invalid username or password.
+                        Invalid username or password!
                     </div>
                     <div th:if="${not_activated}"
                          class="d-flex justify-content-center errors alert text-danger font-weight-bold">
-                        Your account is not activated. Please check your email for the activation link.
+                        Your account is not activated. Please check your email for the activation link!
+                    </div>
+
+                    <div th:if="${param.emailNotExists}"
+                         class="d-flex justify-content-center errors alert text-danger font-weight-bold">
+                        Invalid Email!
                     </div>
                     <div class="form-group">
                         <label for="email">Email address</label>
@@ -55,6 +60,13 @@
                     </div>
                     <button type="submit" class="btn btn-warning btn-block">Login</button>
                 </form>
+                <form th:method="POST" th:action="@{/requestActivationByEmail}">
+                    <div class="form-group">
+                        <label for="email">Enter your email address to request a new activation link</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Request Activation Link</button>
+                </form>
                 <div th:if="${param.passwordChangeSuccess}">
                     <p class="alert alert-success mt-3">Password changed successfully. Please log in with your new password.</p>
                 </div>
@@ -63,6 +75,9 @@
                 </div>
                 <div th:if="${param.activationSuccess}">
                     <p class="alert alert-success mt-3">Account activated successfully. Please log in.</p>
+                </div>
+                <div th:if="${param.emailSendSuccessful}">
+                    <p class="alert alert-success mt-3">New activation link send. Please check your email.</p>
                 </div>
                 <div th:if="${param.activationFailure}">
                     <p class="alert alert-danger mt-3">Account activation failed. The token may be invalid or expired.</p>

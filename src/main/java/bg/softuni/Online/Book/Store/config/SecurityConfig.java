@@ -41,6 +41,7 @@ public class SecurityConfig {
                                                     "/users/login-error", "/about").permitAll()
                                             .requestMatchers("/error").permitAll()
                                             .requestMatchers("/activate").permitAll()
+                                            .requestMatchers("requestActivationByEmail").permitAll()
                                             .requestMatchers("/books/add").hasRole(UserRole.ADMIN.name())
                                             .requestMatchers("/books/edit/**").hasRole(UserRole.ADMIN.name())
                                             .requestMatchers("/books/delete/**").hasRole(UserRole.ADMIN.name())

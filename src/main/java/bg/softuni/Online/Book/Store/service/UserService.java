@@ -33,4 +33,6 @@ public interface UserService {
     void validateOldPassword(Long id, ChangePasswordDTO changePasswordDTO);
 
     boolean activateAccount(String token);
+
+    boolean requestActivationEmail(String email);
 }

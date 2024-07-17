@@ -46,6 +46,8 @@ public class User extends BaseEntity {
 
     private String activationToken;
 
+    private LocalDate tokenExpiryDate;
+
     public User() {
     }
 
@@ -164,6 +166,15 @@ public class User extends BaseEntity {
 
     public User setActivationToken(String activationToken) {
         this.activationToken = activationToken;
+        return this;
+    }
+
+    public LocalDate getTokenExpiryDate() {
+        return tokenExpiryDate;
+    }
+
+    public User setTokenExpiryDate(LocalDate tokenExpiryDate) {
+        this.tokenExpiryDate = tokenExpiryDate;
         return this;
     }
 }
