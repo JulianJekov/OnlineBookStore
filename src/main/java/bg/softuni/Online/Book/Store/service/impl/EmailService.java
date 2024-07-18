@@ -25,4 +25,12 @@ public class EmailService {
         message.setText("Click the following link to activate your account: " + activationLink);
         mailSender.send(message);
     }
+
+    public void sentDeactivationWarning(User user) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());
+        message.setSubject("Account Deactivation Warning");
+        message.setText("Your account will be deactivated if you do not log in within 7 days.");
+        mailSender.send(message);
+    }
 }
