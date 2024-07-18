@@ -112,8 +112,6 @@ public class BookController {
         return new AllBooksDTO();
     }
 
-
-
     @ModelAttribute("bookDetailsDTO")
     public BookDetailsDTO bookDetailsDTO() {
         return new BookDetailsDTO();

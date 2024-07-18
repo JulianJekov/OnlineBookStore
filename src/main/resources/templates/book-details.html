@@ -97,6 +97,7 @@
                     <p class="card-text"><small class="text-muted" th:text="${review.created}">Date</small></p>
                     <form th:if="${#authorization.expression('hasRole(''ADMIN'')') and userId != review.userId}"
                           th:action="@{/review/delete/{id}(id=${review.id})}" th:method="delete">
+                        <input type="hidden" name="bookId" th:value="${bookDetailsDTO.id}">
                         <button type="submit" class="btn btn-danger">Delete</button>
                     </form>
 
