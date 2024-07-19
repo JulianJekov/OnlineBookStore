@@ -7,21 +7,32 @@ html, body {
     background-size: cover;
 }
 
-.not-found {
+.page-error {
     height: 100%;
-    margin: 0;
+    margin: 5%;
     display: flex;
     flex-direction: column;
     background: url(../images/not-found-404.jpg) no-repeat center center fixed;
     background-size: cover;
 }
+
+.not-found {
+    background: url(../images/not-found-404.jpg) no-repeat center center fixed;
+}
 .forbidden {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
     background: url(../images/forbidden-403.png) no-repeat center center fixed;
-    background-size: cover;
+}
+
+.bad-request {
+    background: url(../images/bad-request-400.png) no-repeat center center fixed;
+}
+
+.not-allowed {
+    background: url(../images/not-allowed-405.png) no-repeat center center fixed;
+}
+
+.server-error {
+    background: url(../images/not-allowed-405.png) no-repeat center center fixed;
 }
 
 .my-main{
