@@ -58,12 +58,6 @@ public class BookServiceImpl implements BookService {
                 .body(body)
                 .retrieve()
                 .body(AddBookDTO.class);
-
-
-//        Book book = modelMapper.map(addBookDTO, Book.class);
-//        book.setIsbn(ISBNUtil.generateISBN());
-//        book.setImageUrl(imageCloudService.uploadImg(addBookDTO.getImageUrl()));
-//        return bookRepository.save(book).getId();
     }
 
 
@@ -83,8 +77,6 @@ public class BookServiceImpl implements BookService {
         assert books != null;
 
         return new PageImpl<>(books.getContent(), pageable, books.getPage().totalElements());
-//        return bookRepository.findAll(pageable)
-//                .map(book -> modelMapper.map(book, AllBooksDTO.class));
     }
 
     @Override
@@ -97,8 +89,6 @@ public class BookServiceImpl implements BookService {
                 .retrieve()
                 .body(BookDetailsDTO.class);
 
-//        return bookRepository.findById(id).map(book -> modelMapper.map(book, BookDetailsDTO.class))
-//                .orElseThrow(() -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id)));
     }
 
     @Override
@@ -154,8 +144,6 @@ public class BookServiceImpl implements BookService {
                 .delete()
                 .uri("/books/delete/{id}", id)
                 .retrieve();
-
-//        bookRepository.deleteById(id);
     }
 
     private static MultiValueMap<String, Object> constructMultipartFormData(AddBookDTO addBookDTO) throws IOException {

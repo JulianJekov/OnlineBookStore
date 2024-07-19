@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
+import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_NOT_ACTIVE;
 import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
 
 public class BookStoreDetailsService implements UserDetailsService {
@@ -36,7 +37,7 @@ public class BookStoreDetailsService implements UserDetailsService {
 
     private User checkIfActive(User user) {
         if (!user.isActive()) {
-            throw new UserNotActivatedException("User account is not activated");
+            throw new UserNotActivatedException(USER_NOT_ACTIVE);
         }
         return user;
     }

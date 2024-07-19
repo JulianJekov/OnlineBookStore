@@ -30,6 +30,7 @@ import java.util.*;
 
 import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_NOT_FOUND;
 import static bg.softuni.Online.Book.Store.constants.Exceptions.USER_WITH_EMAIL_NOT_FOUND;
+import static bg.softuni.Online.Book.Store.constants.ValidationMessages.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,6 +43,10 @@ public class UserServiceImpl implements UserService {
     private final ShoppingCartService shoppingCartService;
     private final BookStoreDetailsService bookStoreDetailsService;
     private final EmailService emailService;
+
+    private static final String USERNAME = "username";
+    private static final String EMAIL = "email";
+    public static final String OLD_PASSWORD = "oldPassword";
 
     public UserServiceImpl(UserRepository userRepository,
                            ModelMapper modelMapper,
@@ -142,11 +147,11 @@ public class UserServiceImpl implements UserService {
         List<FieldError> errors = new ArrayList<>();
 
         if (!currentUsername.equals(editedUsername) && userRepository.findByUsername(editedUsername).isPresent()) {
-            errors.add(new FieldError("username", "Username already exists"));
+            errors.add(new FieldError(USERNAME, USERNAME_EXISTS_MESSAGE));
         }
 
         if (!currentEmail.equals(editedEmail) && userRepository.findByEmail(editedEmail).isPresent()) {
-            errors.add(new FieldError("email", "Email already exists"));
+            errors.add(new FieldError(EMAIL, EMAIL_EXISTS_MESSAGE));
         }
 
         if (!errors.isEmpty()) {
@@ -180,7 +185,7 @@ public class UserServiceImpl implements UserService {
         List<FieldError> errors = new ArrayList<>();
 
         if (!passwordEncoder.matches(oldPassword, password)) {
-            errors.add(new FieldError("oldPassword", "Old password does not match!"));
+            errors.add(new FieldError(OLD_PASSWORD, OLD_PASSWORD_DOES_NOT_MATCH_MESSAGE));
         }
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

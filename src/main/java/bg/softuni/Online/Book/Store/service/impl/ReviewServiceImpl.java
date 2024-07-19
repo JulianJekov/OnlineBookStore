@@ -1,7 +1,6 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
 import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
-import bg.softuni.Online.Book.Store.model.dto.review.ReviewCommentDTO;
 import bg.softuni.Online.Book.Store.model.dto.review.ReviewDTO;
 import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
