@@ -22,6 +22,7 @@
 HELP.md
 target/
 target/*
+target/classes
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/main/resources/coordinates/**
