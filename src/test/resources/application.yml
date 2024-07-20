@@ -1,0 +1,58 @@
+spring:
+  application:
+    name: online-book-store
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    defer-datasource-initialization: true
+  sql:
+    init:
+      mode: never
+  mvc:
+    hidden method:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: test
+            client-secret: test
+            scope: user:email
+          google:
+            client-id: test
+            client-secret: test
+            scope: profile, email
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: online.book.store.su@gmail.com
+    password: lxxjdewkwpmpdcuz
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+#        org.springframework: debug
+server:
+  tomcat:
+    max-swallow-size: 5MB
+
+bookstore:
+  remember.me.key: rememberme
+
+cloudinary:
+  name: test
+  api-key: test
+  api-secret: test
+
+books:
+  api:
+    baseUrl: "http://localhost:8081"
