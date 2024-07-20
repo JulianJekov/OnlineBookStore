@@ -9,8 +9,7 @@ import org.springframework.security.core.Authentication;
 public interface UserService {
     void register(UserRegisterDTO userRegisterDTO);
 
-    User saveUser(User user);
-    //todo : make it void maybe
+    void saveUser(User user);
 
     void updateUserLastLogin(User user);
 

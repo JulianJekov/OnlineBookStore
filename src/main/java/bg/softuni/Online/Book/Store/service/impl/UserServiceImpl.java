@@ -82,14 +82,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User saveUser(User user) {
-        return userRepository.save(user);
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
     @Override
     public void updateUserLastLogin(User user) {
         user.setLastLoginDate(LocalDate.now());
-        userRepository.save(user);
+        saveUser(user);
     }
 
     @Override
@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isUserExist(String email) {
         return userRepository.findByEmail(email).isPresent();
+        //todo check and username
     }
 
     @Override
