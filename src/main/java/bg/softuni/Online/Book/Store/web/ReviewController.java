@@ -24,7 +24,8 @@ public class ReviewController {
     @PostMapping("/add")
     public ModelAndView reviewSubmit(ReviewDTO reviewDTO,
                                      @AuthenticationPrincipal BookStoreUserDetails userDetails) {
-        reviewService.createReview(reviewDTO, userDetails);
+        Long id = userDetails.getId();
+        reviewService.createReview(reviewDTO, id);
         return new ModelAndView("redirect:/books/details/" + reviewDTO.getBookId());
     }
 

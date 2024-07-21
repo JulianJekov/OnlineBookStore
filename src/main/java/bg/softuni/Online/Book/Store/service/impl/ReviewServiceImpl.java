@@ -32,11 +32,10 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void createReview(ReviewDTO reviewDTO, BookStoreUserDetails userDetails) {
+    public void createReview(ReviewDTO reviewDTO,Long id) {
         Long bookId = reviewDTO.getBookId();
-        Long userId = userDetails.getId();
 
-        User user = userRepository.findById(userId).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
+        User user = userRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException(USER_NOT_FOUND));
         Book book = bookRepository.findById(bookId).orElseThrow(
                 () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, bookId)));
 
