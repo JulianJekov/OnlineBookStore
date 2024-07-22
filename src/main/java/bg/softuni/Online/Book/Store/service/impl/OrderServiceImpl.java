@@ -35,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public void placeOrder(Long cartItemId, BookStoreUserDetails userDetails) {
-        User user = getUser(userDetails);
+    public void placeOrder(Long cartItemId, Long id) {
+        User user = getUser(id);
 
         CartItem cartItem = cartItemRepository.findById(cartItemId)
                 .orElseThrow(() -> new ObjectNotFoundException(String.format(CART_ITEM_NOT_FOUND, cartItemId)));
@@ -50,21 +50,18 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderViewDTO> viewOrders(BookStoreUserDetails userDetails) {
-        User user = getUser(userDetails);
+    public List<OrderViewDTO> viewOrders(Long id) {
+        User user = getUser(id);
         return user.getOrders()
                 .stream()
                 .map(order -> modelMapper.map(order, OrderViewDTO.class))
                 .toList();
-
     }
 
-    private User getUser(BookStoreUserDetails userDetails) {
-        Long userId = userDetails.getId();
-        return userRepository.findById(userId).orElseThrow(
-                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, userId)));
+    private User getUser(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(USER_NOT_FOUND, id)));
     }
-
 
     private static OrderItem createOrderItem(Order order, Book book, CartItem cartItem) {
         OrderItem orderItem = new OrderItem();

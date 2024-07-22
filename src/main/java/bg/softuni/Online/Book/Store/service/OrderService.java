@@ -6,7 +6,7 @@ import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import java.util.List;
 
 public interface OrderService {
-    void placeOrder(Long cartItemId, BookStoreUserDetails userDetails);
+    void placeOrder(Long cartItemId, Long id);
 
-    List<OrderViewDTO> viewOrders(BookStoreUserDetails userDetails);
+    List<OrderViewDTO> viewOrders(Long id);
 }

@@ -26,7 +26,8 @@ public class OrderController {
     @GetMapping("/history")
     public ModelAndView orderHistory(@AuthenticationPrincipal BookStoreUserDetails userDetails) {
         ModelAndView modelAndView = new ModelAndView("order-history");
-        List<OrderViewDTO> orders = orderService.viewOrders(userDetails);
+        Long id = userDetails.getId();
+        List<OrderViewDTO> orders = orderService.viewOrders(id);
         modelAndView.addObject("orders", orders);
         return modelAndView;
     }
@@ -34,7 +35,8 @@ public class OrderController {
     @PostMapping("/buy/{cartItemId}")
     public ModelAndView order(@PathVariable("cartItemId") Long cartItemId,
                               @AuthenticationPrincipal BookStoreUserDetails userDetails) {
-        orderService.placeOrder(cartItemId, userDetails);
+        Long id = userDetails.getId();
+        orderService.placeOrder(cartItemId, id);
         return new ModelAndView("redirect:/order/history");
     }
 }
