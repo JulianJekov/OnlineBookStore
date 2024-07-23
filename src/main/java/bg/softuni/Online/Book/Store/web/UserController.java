@@ -10,6 +10,9 @@ import bg.softuni.Online.Book.Store.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -65,7 +68,7 @@ public class UserController {
 
     @GetMapping("/login")
     public ModelAndView login() {
-        return new ModelAndView("/login");
+        return new ModelAndView("login");
     }
 
     @PostMapping("/login-error")
@@ -73,7 +76,7 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView("/login");
         if (request.getAttribute("not_active") != null) {
             modelAndView.addObject("not_activated", true);
-        } else if (request.getAttribute("bad_credentials") != null) {
+        }else if (request.getAttribute("bad_credentials") != null) {
             modelAndView.addObject("bad_credentials", true);
         }
         return modelAndView;
