@@ -1,7 +1,12 @@
 package bg.softuni.Online.Book.Store.web;
 
-import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
+import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
+import bg.softuni.Online.Book.Store.model.entity.Role;
+import bg.softuni.Online.Book.Store.model.entity.User;
+import bg.softuni.Online.Book.Store.model.enums.UserRole;
+import bg.softuni.Online.Book.Store.repository.RoleRepository;
+import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.UserService;
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
@@ -13,13 +18,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -30,6 +39,16 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+
 
     @Value("${spring.mail.port}")
     private int port;
@@ -47,25 +66,34 @@ class UserControllerTest {
 
     private UserRegisterDTO validUserRegisterDTO;
 
+    private BookStoreUserDetails userDetails;
+
+
     @BeforeEach
     void setUp() {
         greenMail = new GreenMail(new ServerSetup(port, host, "smtp"));
         greenMail.start();
         greenMail.setUser(username, password);
 
-        validUserRegisterDTO = new UserRegisterDTO()
-                .setFirstName("Test")
-                .setLastName("Test")
-                .setUsername("Test Test")
-                .setEmail("test@test.com")
-                .setAge(33)
-                .setPassword("password")
-                .setConfirmPassword("password");
+        validUserRegisterDTO = createValidUserRegisterDTO();
+
+        userRepository.deleteAll();
+        roleRepository.deleteAll();
+
+        Role userRole = createRoleUser();
+
+        User user = createUser(userRole);
+
+
+        userDetails = createUserDetails(user);
     }
+
+
 
     @AfterEach
     void tearDown() {
         greenMail.stop();
+        userRepository.deleteAll();
     }
 
     @Test
@@ -125,6 +153,7 @@ class UserControllerTest {
                 .andExpect(model().attributeExists("not_activated"))
                 .andExpect(model().attribute("not_activated", true));
     }
+
     @Test
     void testLoginPostEndpointWithBadCredentials() throws Exception {
         mockMvc.perform(post("/users/login-error")
@@ -137,5 +166,67 @@ class UserControllerTest {
                 .andExpect(view().name("/login"))
                 .andExpect(model().attributeExists("bad_credentials"))
                 .andExpect(model().attribute("bad_credentials", true));
+    }
+
+    @Test
+    @WithMockUser(username = "username")
+    void testProfileGetEndpoint() throws Exception {
+        mockMvc.perform(get("/users/profile")
+                        .with(user(userDetails)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/profile"))
+                .andExpect(model().attributeExists("userProfileDTO"))
+                .andExpect(model().attribute("userProfileDTO", hasProperty("id", is(userDetails.getId()))));
+    }
+
+    @Test
+    void testProfileGetEndpointWithNotAuthenticated() throws Exception {
+        mockMvc.perform(get("/users/profile"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("http://localhost/users/login"));
+    }
+
+    private BookStoreUserDetails createUserDetails(User user) {
+        return new BookStoreUserDetails(
+                user.getUsername(),
+                user.getPassword(),
+                user.getRoles()
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getName().toString()))
+                        .toList(),
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName()
+        );
+    }
+
+    private User createUser(Role userRole) {
+        User user = new User();
+        user.setEmail("test@test.com");
+        user.setUsername("username");
+        user.setPassword("password");
+        user.setFirstName("first");
+        user.setLastName("last");
+        user.setRoles(List.of(userRole));
+        userRepository.save(user);
+        return user;
+    }
+
+    private Role createRoleUser() {
+        Role userRole = new Role();
+        userRole.setName(UserRole.USER);
+        roleRepository.save(userRole);
+        return userRole;
+    }
+
+    private UserRegisterDTO createValidUserRegisterDTO() {
+      return new UserRegisterDTO()
+                .setFirstName("Test")
+                .setLastName("Test")
+                .setUsername("Test Test")
+                .setEmail("valid@test.com")
+                .setAge(33)
+                .setPassword("password")
+                .setConfirmPassword("password");
     }
 }
