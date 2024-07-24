@@ -11,6 +11,7 @@ public class BookStoreUserDetails extends User {
     private final String firstName;
     private final String lastName;
 
+
     public BookStoreUserDetails(
             String username, String password,
             Collection<? extends GrantedAuthority> authorities,
@@ -22,6 +23,7 @@ public class BookStoreUserDetails extends User {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
 
     public Long getId() {
         return id;
