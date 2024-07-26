@@ -1,5 +1,7 @@
 package bg.softuni.Online.Book.Store.web;
 
+import bg.softuni.Online.Book.Store.exceptions.FieldError;
+import bg.softuni.Online.Book.Store.exceptions.ValidationException;
 import bg.softuni.Online.Book.Store.model.dto.book.AddBookDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.AllBooksDTO;
 import bg.softuni.Online.Book.Store.model.dto.book.BookDetailsDTO;
@@ -84,6 +86,18 @@ public class BookController {
     public ModelAndView edit(@PathVariable("id") Long id, @Valid EditBookDTO editBookDTO,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
+
+        try {
+            bookService.validateEditBook(editBookDTO);
+        } catch (ValidationException e) {
+            for (FieldError fieldError : e.getFieldErrors()) {
+                bindingResult.rejectValue(
+                        fieldError.getFieldName(),
+                        "error." + fieldError.getFieldName(),
+                        fieldError.getErrorMessage());
+            }
+        }
+
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("editBookDTO", editBookDTO);
             redirectAttributes.addFlashAttribute(

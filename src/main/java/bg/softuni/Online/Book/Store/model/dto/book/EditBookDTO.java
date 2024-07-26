@@ -1,8 +1,6 @@
 package bg.softuni.Online.Book.Store.model.dto.book;
 
 import bg.softuni.Online.Book.Store.validations.imageValidation.ImageFileAnnotation;
-import bg.softuni.Online.Book.Store.validations.uniqueBookTitle.UniqueBookTitle;
-import bg.softuni.Online.Book.Store.validations.uniqueISBN.UniqueISBN;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -18,7 +16,6 @@ public class EditBookDTO {
 
     @Size(min = 2, max = 50, message = BOOK_TITLE_LENGTH_MESSAGE)
     @NotNull(message = BOOK_TITLE_CAN_NOT_BE_NULL)
-    @UniqueBookTitle
     private String title;
 
     @Size(min = 3, max = 50, message = BOOK_AUTHOR_LENGTH_MESSAGE)
@@ -29,7 +26,7 @@ public class EditBookDTO {
     @NotNull(message = BOOK_PUBLISHER_CAN_NOT_BE_NULL)
     private String publisher;
 
-    @UniqueISBN
+
     @Size(min = 13, max = 13, message = BOOK_ISBN_SIZE)
     @NotNull(message = BOOK_ISBN_CAN_NOT_BE_NULL)
     private String isbn;

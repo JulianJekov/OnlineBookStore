@@ -1,6 +1,8 @@
 package bg.softuni.Online.Book.Store.service.impl;
 
+import bg.softuni.Online.Book.Store.exceptions.FieldError;
 import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
+import bg.softuni.Online.Book.Store.exceptions.ValidationException;
 import bg.softuni.Online.Book.Store.model.dto.book.*;
 import bg.softuni.Online.Book.Store.model.entity.Book;
 import bg.softuni.Online.Book.Store.model.entity.Review;
@@ -21,13 +23,19 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static bg.softuni.Online.Book.Store.constants.Exceptions.BOOK_NOT_FOUND;
+import static bg.softuni.Online.Book.Store.constants.ValidationMessages.BOOK_ISBN_EXISTS;
+import static bg.softuni.Online.Book.Store.constants.ValidationMessages.BOOK_TITLE_EXISTS_MESSAGE;
 
 @Service
 public class BookServiceImpl implements BookService {
 
+    private static final String TITLE = "title";
+    private static final String ISBN = "isbn";
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
     private final ImageCloudService imageCloudService;
@@ -97,6 +105,34 @@ public class BookServiceImpl implements BookService {
                 .orElseThrow(() -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id)));
     }
 
+
+    @Override
+    public void validateEditBook(EditBookDTO editBookDTO) {
+        Long id = editBookDTO.getId();
+        Book existingBook = bookRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException(String.format(BOOK_NOT_FOUND, id))
+        );
+        String editedBookTitle = editBookDTO.getTitle();
+        String currentBookTitle = existingBook.getTitle();
+
+        String editedBookISBN = editBookDTO.getIsbn();
+        String currentBookISBN = existingBook.getIsbn();
+
+        List<FieldError> errors = new ArrayList<>();
+        if (!currentBookTitle.equals(editedBookTitle) && bookRepository.findByTitle(editedBookTitle).isPresent()) {
+            errors.add(new FieldError(TITLE, BOOK_TITLE_EXISTS_MESSAGE));
+        }
+
+        if (!currentBookISBN.equals(editedBookISBN) && bookRepository.findByIsbn(editedBookISBN).isPresent()) {
+            errors.add(new FieldError(ISBN, BOOK_ISBN_EXISTS));
+        }
+
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors);
+        }
+
+    }
+
     @Override
     public Long editBook(EditBookDTO editBookDTO) {
         Long id = editBookDTO.getId();
@@ -136,6 +172,7 @@ public class BookServiceImpl implements BookService {
 
         return topRatedBookDTO;
     }
+
 
     @Override
     @Transactional

@@ -25,4 +25,6 @@ public interface BookService {
     void deleteBook(Long id);
 
     TopRatedBookDTO getTopRated();
+
+    void validateEditBook(EditBookDTO editBookDTO);
 }
