@@ -29,7 +29,7 @@
             >
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter Username"
+                    <input type="text" class="form-control" id="username" required placeholder="Enter Username"
                            th:name="username"
                            th:field="*{username}"
                            th:errorclass="is-invalid"
@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="Enter email"
+                    <input type="email" class="form-control" id="email" required placeholder="Enter email"
                            th:name="email"
                            th:field="*{email}"
                            th:errorclass="is-invalid"
@@ -47,7 +47,7 @@
                 </div>
                 <div class="form-group">
                     <label for="firstName">First Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="Enter First Name"
+                    <input type="text" class="form-control" id="firstName" required placeholder="Enter First Name"
                            th:name="firstName"
                            th:field="*{firstName}"
                            th:errorclass="is-invalid"
@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <label for="lastName">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="Enter Last Name"
+                    <input type="text" class="form-control" id="lastName" required placeholder="Enter Last Name"
                            th:name="lastName"
                            th:field="*{lastName}"
                            th:errorclass="is-invalid"
@@ -65,7 +65,7 @@
                 </div>
                 <div class="form-group">
                     <label for="age">Age</label>
-                    <input type="number" class="form-control" id="age" placeholder="Age" value=""
+                    <input type="number" class="form-control" id="age" required placeholder="Age" value=""
                            th:name="age"
                            th:field="*{age}"
                            th:errorclass="is-invalid"
@@ -74,7 +74,7 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter Password"
+                    <input type="password" class="form-control" id="password" required placeholder="Enter Password"
                            autocomplete="new-password"
                            th:name="password"
                            th:field="*{password}"
@@ -84,7 +84,7 @@
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Enter ConfirmPassword"
+                    <input type="password" class="form-control" id="confirmPassword" required placeholder="Enter ConfirmPassword"
                            autocomplete="new-password"
                            th:name="confirmPassword"
                            th:field="*{confirmPassword}"

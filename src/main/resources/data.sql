@@ -17,8 +17,6 @@ VALUES (2, 'user@user.com',
         'afdbcdb98a3dae8cbd1bd09078760e8496d7a175fa727e699399a1d467fc9b4a21e7dac5711bff876bd9d5541e56280f',
         'user', 'User', 'Userov', 31, true);
 
--- user roles
--- admin
 INSERT INTO users_roles (`user_id`, `roles_id`)
 VALUES (1, 1);
 INSERT INTO users_roles (`user_id`, `roles_id`)

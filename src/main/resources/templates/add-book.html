@@ -30,7 +30,7 @@
             >
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Enter book title"
+                    <input type="text" class="form-control" id="title" required placeholder="Enter book title"
                            th:name="title"
                            th:field="*{title}"
                            th:errorclass="is-invalid"
@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-group">
                     <label for="author">Author</label>
-                    <input type="text" class="form-control" id="author" placeholder="Enter author name"
+                    <input type="text" class="form-control" id="author" required placeholder="Enter author name"
                            th:name="author"
                            th:field="*{author}"
                            th:errorclass="is-invalid"
@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                     <label for="publisher">Publisher</label>
-                    <input type="text" class="form-control" id="publisher" placeholder="Enter publisher name"
+                    <input type="text" class="form-control" id="publisher" required placeholder="Enter publisher name"
                            th:name="*{publisher}"
                            th:field="*{publisher}"
                            th:errorclass="is-invalid"
@@ -58,7 +58,7 @@
 
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" placeholder="Enter book price"  value=""
+                    <input type="number" class="form-control" id="price" required placeholder="Enter book price"  value=""
                            th:name="*{price}"
                            th:field="*{price}"
                            th:errorclass="is-invalid"
@@ -76,6 +76,7 @@
                                 type="file"
                                 id="imageUrl"
                                 class="form-control-file"
+                                required
                                 aria-describedby="imageUrl"
                         >
                         <small th:errors="*{imageUrl}" class="invalid-feedback danger"></small>
