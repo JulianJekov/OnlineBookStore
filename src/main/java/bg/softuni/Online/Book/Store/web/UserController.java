@@ -106,7 +106,10 @@ public class UserController {
             userService.validateUserProfile(userProfileDTO);
         } catch (ValidationException e) {
             for (FieldError fieldError : e.getFieldErrors()) {
-                bindingResult.rejectValue(fieldError.getFieldName(), "error." + fieldError.getFieldName(), fieldError.getErrorMessage());
+                bindingResult.rejectValue(
+                        fieldError.getFieldName(),
+                        "error." + fieldError.getFieldName(),
+                        fieldError.getErrorMessage());
             }
         }
 

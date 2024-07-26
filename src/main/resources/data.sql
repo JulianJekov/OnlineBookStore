@@ -48,6 +48,6 @@ VALUES ('The Great Gatsby', 'F. Scott Fitzgerald', '9780743273565', 'Charles Scr
        ('The Hobbit', 'J.R.R. Tolkien', '9780547928227', 'George Allen & Unwin', 14.95,
         'https://images-na.ssl-images-amazon.com/images/I/91b0C2YNSrL.jpg'),
        ('Fahrenheit 451', 'Ray Bradbury', '9781451673319', 'Ballantine Books', 11.99,
-        'https://images-na.ssl-images-amazon.com/images/I/81p%2Bxe8cbnL.jpg'),
+        'https://m.media-amazon.com/images/I/81BOCFhf0TL._AC_UF1000,1000_QL80_.jpg'),
        ('The Adventures of Huckleberry Finn', 'Mark Twain', '9780486280615', 'Charles L. Webster And Company', 4.99,
         'https://m.media-amazon.com/images/I/51EU6zFkbEL._AC_UF1000,1000_QL80_.jpg');

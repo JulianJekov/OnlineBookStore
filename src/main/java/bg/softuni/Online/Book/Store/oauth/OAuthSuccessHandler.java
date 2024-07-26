@@ -29,7 +29,7 @@ public class OAuthSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
             String email = user.getAttribute("email");
             String name = user.getAttribute("name");
 
-            if (!userService.isUserExist(email)) {
+            if (!userService.isUserExist(name, email)) {
                 userService.createUserIfNotExist(email, name);
             }
             authentication = userService.login(email);

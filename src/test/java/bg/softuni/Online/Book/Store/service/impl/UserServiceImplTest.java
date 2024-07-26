@@ -163,20 +163,22 @@ class UserServiceImplTest {
     void testIsUserExistsTrue() {
         User user = createUser();
         String email = user.getEmail();
+        String username = user.getUsername();
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
 
-        assertTrue(userService.isUserExist(email));
+        assertTrue(userService.isUserExist(username, email));
     }
 
     @Test
     void testIsUserExistsFalse() {
         User user = createUser();
         String email = user.getEmail();
+        String username = user.getUsername();
 
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        assertFalse(userService.isUserExist(email));
+        assertFalse(userService.isUserExist(username, email));
     }
 
     @Test

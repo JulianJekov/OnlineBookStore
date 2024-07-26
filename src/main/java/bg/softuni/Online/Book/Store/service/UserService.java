@@ -15,7 +15,7 @@ public interface UserService {
 
     User findUserByEmail(String email);
 
-    boolean isUserExist(String email);
+    boolean isUserExist(String username, String email);
 
     void createUserIfNotExist(String email, String name);
 
