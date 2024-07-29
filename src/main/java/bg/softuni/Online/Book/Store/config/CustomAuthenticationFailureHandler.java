@@ -14,7 +14,7 @@ import java.io.IOException;
 public class CustomAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        if (exception.getCause() instanceof UserNotActivatedException) {
+        if (exception.getCause() instanceof UserNotActivatedException || exception instanceof UserNotActivatedException) {
             request.setAttribute("not_active", true);
             request.getRequestDispatcher("/users/login-error").forward(request, response);
         } else {

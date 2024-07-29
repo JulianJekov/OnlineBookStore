@@ -1,5 +1,6 @@
 package bg.softuni.Online.Book.Store.web;
 
+import bg.softuni.Online.Book.Store.aop.WarnIfExecutionExceeds;
 import bg.softuni.Online.Book.Store.exceptions.FieldError;
 import bg.softuni.Online.Book.Store.exceptions.ValidationException;
 import bg.softuni.Online.Book.Store.model.dto.user.ChangePasswordDTO;
@@ -41,11 +42,14 @@ public class UserController {
         return new ChangePasswordDTO();
     }
 
+
     @GetMapping("/register")
     public ModelAndView register() {
         return new ModelAndView("register");
     }
-
+    @WarnIfExecutionExceeds(
+            timeInMilliseconds = 1000
+    )
     @PostMapping("/register")
 
     public ModelAndView register(@Valid UserRegisterDTO userRegisterDTO, BindingResult bindingResult,
@@ -59,7 +63,6 @@ public class UserController {
         }
 
         userService.register(userRegisterDTO);
-
         return new ModelAndView("redirect:/users/login?confirmEmail");
     }
 
@@ -164,6 +167,5 @@ public class UserController {
 
         return new ModelAndView("redirect:/users/login?passwordChangeSuccess");
     }
-
 
 }
