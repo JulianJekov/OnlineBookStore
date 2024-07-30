@@ -3,7 +3,7 @@ spring:
         name: online-book-store
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/book-store?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+        url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/book-store?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
         password: ${DB_PASSWORD}
         username: ${DB_USERNAME}
     devtools:

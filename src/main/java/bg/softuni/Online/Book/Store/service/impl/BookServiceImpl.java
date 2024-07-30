@@ -36,6 +36,7 @@ public class BookServiceImpl implements BookService {
 
     private static final String TITLE = "title";
     private static final String ISBN = "isbn";
+
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
     private final ImageCloudService imageCloudService;
@@ -43,7 +44,8 @@ public class BookServiceImpl implements BookService {
 
     public BookServiceImpl(BookRepository bookRepository,
                            ModelMapper modelMapper,
-                           ImageCloudService imageCloudService, RestClient bookRestClient) {
+                           ImageCloudService imageCloudService,
+                           RestClient bookRestClient) {
         this.bookRepository = bookRepository;
         this.modelMapper = modelMapper;
         this.imageCloudService = imageCloudService;

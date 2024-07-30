@@ -14,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -131,7 +130,7 @@ class BookControllerTest {
                 "image/jpeg",
                 "test image content".getBytes());
 
-        mockMvc.perform(multipart("/books/edit/1")
+        mockMvc.perform(multipart("/books/edit/{id}", book.getId())
                         .file(file)
                         .param("title", "t")
                         .param("author", "")

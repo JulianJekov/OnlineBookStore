@@ -165,7 +165,7 @@ class UserServiceImplTest {
         String email = user.getEmail();
         String username = user.getUsername();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.of(user));
+        when(userRepository.findByUsernameOrEmail(username, email)).thenReturn(Optional.of(user));
 
         assertTrue(userService.isUserExist(username, email));
     }
@@ -176,7 +176,7 @@ class UserServiceImplTest {
         String email = user.getEmail();
         String username = user.getUsername();
 
-        when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(userRepository.findByUsernameOrEmail(username, email)).thenReturn(Optional.empty());
 
         assertFalse(userService.isUserExist(username, email));
     }
