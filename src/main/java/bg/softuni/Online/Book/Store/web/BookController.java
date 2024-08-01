@@ -34,7 +34,7 @@ public class BookController {
 
     @GetMapping("/add")
     public ModelAndView addBook() {
-        return new ModelAndView("/add-book");
+        return new ModelAndView("add-book");
     }
 
     @PostMapping("/add")
@@ -66,7 +66,7 @@ public class BookController {
     @GetMapping("/details/{id}")
     public ModelAndView details(@PathVariable("id") Long id, @AuthenticationPrincipal BookStoreUserDetails userDetails) {
         BookDetailsDTO bookDetailsDTO = bookService.findBookById(id);
-        ModelAndView modelAndView = new ModelAndView("/book-details");
+        ModelAndView modelAndView = new ModelAndView("book-details");
         modelAndView.addObject("bookDetailsDTO", bookDetailsDTO);
         modelAndView.addObject("userId", userDetails.getId());
         return modelAndView;
@@ -75,7 +75,7 @@ public class BookController {
     @GetMapping("/edit/{id}")
     public ModelAndView edit(@PathVariable("id") Long id) {
         EditBookDTO editBookDTO = bookService.findBookByIdEdit(id);
-        ModelAndView modelAndView = new ModelAndView("/edit-book");
+        ModelAndView modelAndView = new ModelAndView("edit-book");
         if (!modelAndView.getModel().containsKey("editBookDTO")) {
             modelAndView.addObject("editBookDTO", editBookDTO);
         }

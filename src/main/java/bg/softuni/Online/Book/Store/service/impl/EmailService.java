@@ -11,7 +11,7 @@ import static bg.softuni.Online.Book.Store.constants.Messages.*;
 public class EmailService {
 
     private final JavaMailSender mailSender;
-    private static final String ACTIVATION_LINK = "http://localhost:8080/activate?token=";
+    private static final String ACTIVATION_LINK = "https://bookstore-bookstore.azuremicroservices.io/activate?token=";
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;

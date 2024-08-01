@@ -73,7 +73,7 @@ public class UserController {
 
     @PostMapping("/login-error")
     public ModelAndView onFailure(HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView("/login");
+        ModelAndView modelAndView = new ModelAndView("login");
         if (request.getAttribute("not_active") != null) {
             modelAndView.addObject("not_activated", true);
         }else if (request.getAttribute("bad_credentials") != null) {
@@ -85,7 +85,7 @@ public class UserController {
     @GetMapping("/profile")
     public ModelAndView profile(@AuthenticationPrincipal BookStoreUserDetails userDetails) {
         Long id = userDetails.getId();
-        ModelAndView modelAndView = new ModelAndView("/profile");
+        ModelAndView modelAndView = new ModelAndView("profile");
         UserProfileDTO userProfileDTO = userService.getUserDetails(id);
         modelAndView.addObject("userProfileDTO", userProfileDTO);
         return modelAndView;
@@ -93,7 +93,7 @@ public class UserController {
 
     @GetMapping("/edit-profile")
     public ModelAndView editProfile(@AuthenticationPrincipal BookStoreUserDetails userDetails) {
-        ModelAndView modelAndView = new ModelAndView("/edit-profile");
+        ModelAndView modelAndView = new ModelAndView("edit-profile");
         Long id = userDetails.getId();
         UserProfileDTO userProfileDTO = userService.getUserDetails(id);
         if (!modelAndView.getModel().containsKey("userProfileDTO")) {
@@ -124,12 +124,12 @@ public class UserController {
 
         userService.editProfile(userProfileDTO);
 
-        return new ModelAndView("/profile");
+        return new ModelAndView("profile");
     }
 
     @GetMapping("/change-password")
     public ModelAndView changePassword() {
-        return new ModelAndView("/change-password");
+        return new ModelAndView("change-password");
     }
 
     @PatchMapping("/change-password")
