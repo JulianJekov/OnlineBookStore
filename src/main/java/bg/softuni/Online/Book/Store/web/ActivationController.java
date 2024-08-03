@@ -21,9 +21,9 @@ public class ActivationController {
         ModelAndView modelAndView = new ModelAndView();
         boolean isActivated = userService.activateAccount(token);
         if (isActivated) {
-            modelAndView.setViewName("redirect:/users/login?activationSuccess");
+            modelAndView.setViewName("redirect:/users/login?activation_success");
         } else {
-            modelAndView.setViewName("redirect:/users/login?activationFailure");
+            modelAndView.setViewName("redirect:/users/login?activation_failure");
         }
         return modelAndView;
     }
@@ -33,8 +33,8 @@ public class ActivationController {
         boolean isValid = userService.requestActivationEmail(email);
 
         if (!isValid) {
-            return new ModelAndView("redirect:/users/login?emailNotExists");
+            return new ModelAndView("redirect:/users/login?email_not_exists");
         }
-        return new ModelAndView("redirect:/users/login?emailSendSuccessful");
+        return new ModelAndView("redirect:/users/login?email_send_successful");
     }
 }

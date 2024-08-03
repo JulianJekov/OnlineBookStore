@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -24,8 +22,6 @@
     <div class="container-fluid mb-5">
         <h5 class="text-center text-dark mt-5">
             <span th:text="#{home_main_welcome}"></span>
-<!--            Welcome to Book Store,-->
-<!--            <span th:text="${welcome}"></span>-->
             <th:block th:text="${welcome}"></th:block>
         </h5>
     </div>

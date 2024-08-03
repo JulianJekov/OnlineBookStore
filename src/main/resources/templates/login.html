@@ -4,108 +4,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Bookstore - Login</title>
+    <title th:text="#{login_title}">Online Bookstore - Login</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <header class="bg-dark text-white text-center py-3">
-        <div class="container">
-            <h1 class="h2">Welcome to the Login Page</h1>
-        </div>
-    </header>
+<header class="bg-dark text-white text-center py-3">
+    <div class="container">
+        <h1 th:text="#{login_welcome}" class="h2">Welcome to the Login Page</h1>
+    </div>
+</header>
 
-    <div th:replace="~{fragments/navigation}"></div>
+<div th:replace="~{fragments/navigation}"></div>
 
-    <main>
-        <div class="container">
-            <div class="login-form">
-                <h2 class="text-center">Login to Your Account</h2>
-                <form
-                th:method="POST"
-                th:action="@{/users/login}"
-                >
-                    <div th:if="${bad_credentials}"
-                         class="d-flex justify-content-center errors alert text-danger font-weight-bold">
-                        Invalid username or password!
-                    </div>
-                    <div th:if="${not_activated}"
-                         class="d-flex justify-content-center errors alert text-danger font-weight-bold">
-                        Your account is not activated. Please check your email for the activation link!
-                    </div>
+<main>
+    <div class="container">
+        <div class="login-form">
+            <h2 th:text="#{login_to_account}" class="text-center">Login to Your Account</h2>
+            <form
+                    th:method="POST"
+                    th:action="@{/users/login}"
+            >
+                <div th:if="${bad_credentials}"
+                     class="d-flex justify-content-center errors alert text-danger font-weight-bold"
+                     th:text="#{login_bad_credentials}">
+                    Invalid username or password!
+                </div>
+                <div th:if="${not_activated}"
+                     class="d-flex justify-content-center errors alert text-danger font-weight-bold"
+                     th:text="#{login_not_activated}">
+                    Your account is not activated. Please check your email for the activation link!
+                </div>
 
-                    <div th:if="${param.emailNotExists}"
-                         class="d-flex justify-content-center errors alert text-danger font-weight-bold">
-                        Invalid Email!
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" required placeholder="Enter email"
-                        th:name="email"
-                        >
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password" required autocomplete="new-password"
-                        th:name="password"
-                        >
-                    </div>
-                    <div class="form-group text-lg-center">
-                        <label for="remember-me" class="text-warning font-weight-bold mr-2">Remember me</label>
-                        <input value=""
-                               id="remember-me"
-                               name="remember-me"
-                               type="checkbox"/>
-                    </div>
-                    <button type="submit" class="btn btn-warning btn-block">Login</button>
-                </form>
-                <form th:method="POST" th:action="@{/requestActivationByEmail}">
-                    <div class="form-group text-center">
-                        <label for="email" class="text-warning font-weight-bold mt-2">
-                            Enter your email address to request a new activation link</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-block">Request Activation Link</button>
-                </form>
-                <div th:if="${param.passwordChangeSuccess}">
-                    <p class="alert alert-success mt-3">Password changed successfully. Please log in with your new password.</p>
+                <div th:if="${param.email_not_exists}"
+                     class="d-flex justify-content-center errors alert text-danger font-weight-bold"
+                     th:text="#{login_send_activation_link}">
+                    Invalid Email!
                 </div>
-                <div th:if="${param.confirmEmail}">
-                    <p class="alert alert-success mt-3">Registration successfully. Please check your email.</p>
+                <div class="form-group">
+                    <label for="email" th:text="#{login_email}">Email address</label>
+                    <input type="email" class="form-control"
+                           id="email"
+                           required
+                           th:placeholder="#{login_placeholder_email}"
+                           th:name="email"
+                    >
                 </div>
-                <div th:if="${param.activationSuccess}">
-                    <p class="alert alert-success mt-3">Account activated successfully. Please log in.</p>
+                <div class="form-group">
+                    <label for="password" th:text="#{login_password}">Password</label>
+                    <input type="password" class="form-control"
+                           id="password"
+                           th:placeholder="#{login_placeholder_password}"
+                           required
+                           autocomplete="new-password"
+                           th:name="password"
+                    >
                 </div>
-                <div th:if="${param.emailSendSuccessful}">
-                    <p class="alert alert-success mt-3">New activation link send. Please check your email.</p>
+                <div class="form-group text-lg-center">
+                    <label for="remember-me" class="font-weight-bold mr-2"
+                           th:text="#{login_remember_me}">Remember me</label>
+                    <input value=""
+                           id="remember-me"
+                           name="remember-me"
+                           type="checkbox"/>
                 </div>
-                <div th:if="${param.activationFailure}">
-                    <p class="alert alert-danger mt-3">Account activation failed. The token may be invalid or expired.</p>
+                <button type="submit" class="btn btn-warning btn-block" th:text="#{login_btn}">Login</button>
+            </form>
+            <form th:method="POST" th:action="@{/requestActivationByEmail}">
+                <div class="form-group text-center">
+                    <label for="email" class="font-weight-bold mt-2"
+                           th:text="#{login_request_activation_link}">
+                        Enter your email address to request a new activation link</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
-                <hr>
-                <div class="row">
+                <button type="submit" class="btn btn-primary btn-block"
+                        th:text="#{login_request_btn}">Request Activation Link
+                </button>
+            </form>
+            <div th:if="${param.password_change_success}">
+                <p class="alert alert-success mt-3"
+                   th:text="#{login_success_password_change}">
+                </p>
+            </div>
+            <div th:if="${param.confirmEmail}">
+                <p class="alert alert-success mt-3">Registration successfully. Please check your email.</p>
+            </div>
+            <div th:if="${param.activationSuccess}">
+                <p class="alert alert-success mt-3">Account activated successfully. Please log in.</p>
+            </div>
+            <div th:if="${param.emailSendSuccessful}">
+                <p class="alert alert-success mt-3">New activation link send. Please check your email.</p>
+            </div>
+            <div th:if="${param.activationFailure}">
+                <p class="alert alert-danger mt-3">Account activation failed. The token may be invalid or expired.</p>
+            </div>
+            <hr>
+            <div class="row">
                 <div class="text-center col-lg-6 mb-1">
                     <a th:href="@{/oauth2/authorization/github}" class="btn btn-dark btn-block">
-                        <i class="fab fa-github"></i> Login with GitHub
+                        <i class="fab fa-github"></i>
+                        <span th:text="#{login_with_github}"></span>
                     </a>
                 </div>
                 <div class="text-center col-lg-6">
                     <a th:href="@{/oauth2/authorization/google}" class="btn btn-primary btn-block">
-                        <i class="fab fa-google"></i> Login with Google
+                        <i class="fab fa-google"></i>
+                        <span th:text="#{login_with_google}"></span>
                     </a>
-                </div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+</main>
 
-    <div th:replace="~{fragments/footer}"></div>
+<div th:replace="~{fragments/footer}"></div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/52fae3af75.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://kit.fontawesome.com/52fae3af75.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -165,7 +165,7 @@ public class UserController {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
         }
 
-        return new ModelAndView("redirect:/users/login?passwordChangeSuccess");
+        return new ModelAndView("redirect:/users/login?password_change_success");
     }
 
 }
