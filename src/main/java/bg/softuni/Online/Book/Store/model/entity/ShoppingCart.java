@@ -12,7 +12,7 @@ public class ShoppingCart extends BaseEntity{
     @OneToOne()
     private User user;
 
-    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "shoppingCart", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<CartItem> cartItems = new ArrayList<>();
 
     public ShoppingCart() {

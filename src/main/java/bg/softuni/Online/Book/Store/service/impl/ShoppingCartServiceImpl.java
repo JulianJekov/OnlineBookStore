@@ -11,6 +11,7 @@ import bg.softuni.Online.Book.Store.repository.UserRepository;
 import bg.softuni.Online.Book.Store.service.ShoppingCartService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -70,7 +71,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItemRepository.save(cartItem);
         shoppingCart.getCartItems().add(cartItem);
         shoppingCartRepository.save(shoppingCart);
-
     }
 
     @Override
@@ -89,6 +89,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void deleteItem(Long id) {
         ShoppingCart shoppingCart = shoppingCartRepository.findByCartItemsId(id).orElseThrow(
                 () -> new ObjectNotFoundException(SHOPPING_CART_NOT_FOUND));
+        CartItem cartItem = cartItemRepository.findById(id).orElseThrow(
+                () -> new ObjectNotFoundException("Cart item not found"));
+        shoppingCart.getCartItems().remove(cartItem);
         cartItemRepository.deleteById(id);
         shoppingCartRepository.save(shoppingCart);
     }

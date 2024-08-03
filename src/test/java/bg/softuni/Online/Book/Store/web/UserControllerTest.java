@@ -1,5 +1,7 @@
 package bg.softuni.Online.Book.Store.web;
 
+import bg.softuni.Online.Book.Store.model.dto.user.ChangePasswordDTO;
+import bg.softuni.Online.Book.Store.model.dto.user.UserProfileDTO;
 import bg.softuni.Online.Book.Store.model.dto.user.UserRegisterDTO;
 import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.model.entity.Role;
@@ -18,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -29,8 +33,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -81,13 +84,9 @@ class UserControllerTest {
         roleRepository.deleteAll();
 
         Role userRole = createRoleUser();
-
         User user = createUser(userRole);
-
-
         userDetails = createUserDetails(user);
     }
-
 
 
     @AfterEach
@@ -186,9 +185,81 @@ class UserControllerTest {
                 .andExpect(redirectedUrl("http://localhost/users/login"));
     }
 
+
+    @Test
+    void testEditProfileGetEndpoint() throws Exception {
+        mockMvc.perform(get("/users/edit-profile")
+                        .with(user(userDetails))
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/edit-profile"))
+                .andExpect(model().attributeExists("userProfileDTO"));
+    }
+
+    @Test
+    void testEditProfileWithValidData() throws Exception {
+        UserProfileDTO userProfileDTO = validUserProfileDTO();
+
+        mockMvc.perform(patch("/users/edit-profile")
+                        .flashAttr("userProfileDTO", userProfileDTO)
+                        .with(csrf())
+                        .with(user(userDetails)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/profile"));
+    }
+
+    @Test
+    void testEditProfileWithInvalidData() throws Exception {
+        UserProfileDTO userProfileDTO = invalidUserProfileDTO();
+
+        mockMvc.perform(patch("/users/edit-profile")
+                        .flashAttr("userProfileDTO", userProfileDTO)
+                        .with(csrf())
+                        .with(user(userDetails)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("edit-profile"));
+    }
+
+    @Test
+    void testChangePasswordGetEndpoint() throws Exception {
+        mockMvc.perform(get("/users/change-password")
+                        .with(csrf())
+                        .with(user(userDetails)))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/change-password"));
+    }
+
+
+    private ChangePasswordDTO createValidChangePasswordDTO() {
+        return new ChangePasswordDTO()
+                .setOldPassword(userDetails.getPassword())
+                .setPassword("test")
+                .setConfirmPassword("test");
+    }
+
+    private UserProfileDTO validUserProfileDTO() {
+        return new UserProfileDTO()
+                .setId(userDetails.getId())
+                .setFirstName(userDetails.getFirstName())
+                .setLastName(userDetails.getLastName())
+                .setAge(22)
+                .setEmail(userDetails.getUsername())
+                .setUsername("test123");
+    }
+
+    private UserProfileDTO invalidUserProfileDTO() {
+        return new UserProfileDTO()
+                .setId(userDetails.getId())
+                .setFirstName("")
+                .setLastName("")
+                .setAge(-1)
+                .setEmail(userDetails.getUsername())
+                .setUsername("test123");
+    }
+
     private BookStoreUserDetails createUserDetails(User user) {
         return new BookStoreUserDetails(
-                user.getUsername(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getRoles()
                         .stream()
@@ -220,7 +291,7 @@ class UserControllerTest {
     }
 
     private UserRegisterDTO createValidUserRegisterDTO() {
-      return new UserRegisterDTO()
+        return new UserRegisterDTO()
                 .setFirstName("Test")
                 .setLastName("Test")
                 .setUsername("Test Test")
