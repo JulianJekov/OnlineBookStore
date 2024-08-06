@@ -3,7 +3,6 @@ package bg.softuni.Online.Book.Store.model.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -10,6 +10,8 @@ public class ImageUploadExceptionHandler {
 
     //Not working for some reason
     //When debugging it stops here but not handling the exception
+
+    //Work when the app is deployed
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ModelAndView handleMax() {
         return new ModelAndView("error/upload-error");

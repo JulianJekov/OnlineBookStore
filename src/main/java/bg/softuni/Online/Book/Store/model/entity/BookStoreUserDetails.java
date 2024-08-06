@@ -24,7 +24,6 @@ public class BookStoreUserDetails extends User {
         this.lastName = lastName;
     }
 
-
     public Long getId() {
         return id;
     }

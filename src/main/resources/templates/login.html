@@ -87,16 +87,16 @@
                    th:text="#{login_success_password_change}">
                 </p>
             </div>
-            <div th:if="${param.confirmEmail}">
+            <div th:if="${param.confirm_email}">
                 <p class="alert alert-success mt-3">Registration successfully. Please check your email.</p>
             </div>
-            <div th:if="${param.activationSuccess}">
+            <div th:if="${param.activation_success}">
                 <p class="alert alert-success mt-3">Account activated successfully. Please log in.</p>
             </div>
-            <div th:if="${param.emailSendSuccessful}">
+            <div th:if="${param.email_send_successful}">
                 <p class="alert alert-success mt-3">New activation link send. Please check your email.</p>
             </div>
-            <div th:if="${param.activationFailure}">
+            <div th:if="${param.activation_failure}">
                 <p class="alert alert-danger mt-3">Account activation failed. The token may be invalid or expired.</p>
             </div>
             <hr>

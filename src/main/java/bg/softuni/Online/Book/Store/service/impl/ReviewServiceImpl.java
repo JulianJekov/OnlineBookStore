@@ -3,7 +3,6 @@ package bg.softuni.Online.Book.Store.service.impl;
 import bg.softuni.Online.Book.Store.exceptions.ObjectNotFoundException;
 import bg.softuni.Online.Book.Store.model.dto.review.ReviewDTO;
 import bg.softuni.Online.Book.Store.model.entity.Book;
-import bg.softuni.Online.Book.Store.model.entity.BookStoreUserDetails;
 import bg.softuni.Online.Book.Store.model.entity.Review;
 import bg.softuni.Online.Book.Store.model.entity.User;
 import bg.softuni.Online.Book.Store.repository.BookRepository;
@@ -24,7 +23,10 @@ public class ReviewServiceImpl implements ReviewService {
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository, UserRepository userRepository, BookRepository bookRepository, ModelMapper modelMapper) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository,
+                             UserRepository userRepository,
+                             BookRepository bookRepository,
+                             ModelMapper modelMapper) {
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
         this.bookRepository = bookRepository;

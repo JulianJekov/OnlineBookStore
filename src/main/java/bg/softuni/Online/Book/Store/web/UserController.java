@@ -63,7 +63,7 @@ public class UserController {
         }
 
         userService.register(userRegisterDTO);
-        return new ModelAndView("redirect:/users/login?confirmEmail");
+        return new ModelAndView("redirect:/users/login?confirm_email");
     }
 
     @GetMapping("/login")
