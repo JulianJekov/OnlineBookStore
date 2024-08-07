@@ -27,7 +27,7 @@
   </ol>
   </ol>
 </details>
-### Getting Started
+## 🚀 Getting Started
 <p>To get started with the Online Book Store project, follow these steps:</p>
 📋 ### Prerequisites
 <ul>
