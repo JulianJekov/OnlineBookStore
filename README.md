@@ -128,7 +128,7 @@ datasource:
 </ul>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Usage
+### Usage
 <p>To use the Online Book Store application:</p>
 <ul>
   <li>Register and activate your account via the email verification link.</li>
