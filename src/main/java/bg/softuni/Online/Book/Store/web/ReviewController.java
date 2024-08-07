@@ -43,7 +43,7 @@ public class ReviewController {
             return new ModelAndView("redirect:/books/details/" + bookId + "?error=reviewNotFound");
         }
 
-        if (!review.getUser().getId().equals(userDetails.getId()) && !userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
+        if (!review.getUser().getId().equals(userDetails.getId()) && !userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             return new ModelAndView("redirect:/books/details/" + bookId + "?error=notAuthorized");
         }
         reviewService.delete(id);

@@ -107,8 +107,8 @@ class UserControllerTest {
         mockMvc.perform(post("/users/register").with(csrf())
                         .flashAttr("userRegisterDTO", validUserRegisterDTO))
                 .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/users/login?confirmEmail"))
-                .andExpect(redirectedUrl("/users/login?confirmEmail"));
+                .andExpect(view().name("redirect:/users/login?confirm_email"))
+                .andExpect(redirectedUrl("/users/login?confirm_email"));
 
         greenMail.waitForIncomingEmail(1);
         MimeMessage[] receivedMessages = greenMail.getReceivedMessages();
