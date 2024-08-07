@@ -30,16 +30,16 @@
     <li><a href="#usage">Usage</a></li>
   </ol>
 </details>
-🚀
+
 ## Getting Started
 <p>To get started with the Online Book Store project, follow these steps:</p>
-📋
+
 ### Prerequisites
 * JDK 17+
 * Apache Maven 3.6+
 * MySQL
 
-### 🛠 Installation
+### Installation
 <p>To install and run the Online Book Store application:</p>
 <ol>
   <li><a href="https://github.com/JulianJekov/OnlineBookStore/archive/refs/heads/master.zip">Download</a> the repository.</li>
@@ -50,7 +50,7 @@
   <pre><code>mvn spring-boot:run</code></pre>
 </ol>
 
-### 🔧 Setting Environment Variables
+### Setting Environment Variables
 <p>Before starting the application, set up the following environment variables ${MYSQL_PORT}, ${MYSQL_USER}.. etc... in your application.properties or application.yml:</p>
 
 ```yaml
@@ -61,9 +61,9 @@ datasource:
     username: ${DB_USERNAME}
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-📖 ### About The Project
+### About The Project
 <p>The Online Book Store project is a Spring Boot MVC application designed to manage book catalogs, user profiles, and more.</p>
-🛠 ### Technologies
+### Technologies
 <p align="center">
   <img src="https://img.shields.io/badge/Java-ED4236?logo=java&logoColor=white">
   <img src="https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=spring-boot&logoColor=white">
@@ -74,7 +74,7 @@ datasource:
   <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white">
 </p>
-🌟 Features
+### Features
 <ul>
   <li><strong>User Management:</strong>
     <ul>
@@ -124,7 +124,7 @@ datasource:
   </li>
 </ul>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-💻 Usage
+### Usage
 <p>To use the Online Book Store application:</p>
 <ul>
   <li>Register and activate your account via the email verification link.</li>
