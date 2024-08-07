@@ -61,8 +61,10 @@ datasource:
     username: ${DB_USERNAME}
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## About The Project
 <p>The Online Book Store project is a Spring Boot MVC application designed to manage book catalogs, user profiles, and more.</p>
+
 ## Technologies
 <p align="center">
   <img src="https://img.shields.io/badge/Java-ED4236?logo=java&logoColor=white">
@@ -74,6 +76,7 @@ datasource:
   <img src="https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white">
   <img src="https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white">
 </p>
+
 ## Features
 <ul>
   <li><strong>User Management:</strong>
@@ -124,6 +127,7 @@ datasource:
   </li>
 </ul>
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## Usage
 <p>To use the Online Book Store application:</p>
 <ul>
