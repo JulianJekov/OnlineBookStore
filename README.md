@@ -1,4 +1,5 @@
 <a name="readme-top"></a>
+# 📚 Online Book Store 📚
 
 <div align="center">
   <h1>📚 Online Book Store 📚</h1>
@@ -34,11 +35,9 @@
 <p>To get started with the Online Book Store project, follow these steps:</p>
 
 ### 📋 Prerequisites
-<ul>
-  <li>JDK 17+</li>
-  <li>Apache Maven 3.6+</li>
-  <li>MySQL</li>
-</ul>
+* JDK 17+
+* Apache Maven 3.6+
+* MySQL
 
 ### 🛠 Installation
 <p>To install and run the Online Book Store application:</p>
