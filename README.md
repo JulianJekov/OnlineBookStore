@@ -10,20 +10,20 @@
 <details>
   <summary>📑 Table of Contents</summary>
   <ol>
-    <li><a href="#-getting-started">Getting Started</a>
+    <li><a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#-prerequisites">Prerequisites</a></li>
-        <li><a href="#-installation">Installation</a></li>
-        <li><a href="#-setting-environment-variables">Setting Environment Variables</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#setting-environment-variables">Setting Environment Variables</a></li>
       </ul>
     </li>
-    <li><a href="#-about-the-project">About The Project</a>
+    <li><a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#-technologies">Technologies</a></li>
-        <li><a href="#-features">Features</a></li>
+        <li><a href="#technologies">Technologies</a></li>
+        <li><a href="#features">Features</a></li>
       </ul>
     </li>
-    <li><a href="#-usage">Usage</a></li>
+    <li><a href="#usage">Usage</a></li>
   </ol>
   </ol>
 </details>
@@ -35,7 +35,7 @@
   <li>Apache Maven 3.6+</li>
   <li>MySQL</li>
 </ul>
-🛠 ### Installation
+### 🛠 Installation
 <p>To install and run the Online Book Store application:</p>
 <ol>
   <li><a href="https://github.com/JulianJekov/OnlineBookStore/archive/refs/heads/master.zip">Download</a> the repository.</li>
