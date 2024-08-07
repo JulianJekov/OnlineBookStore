@@ -1,3 +1,5 @@
+<a name="readme-top"></a>
+
 <div align="center">
   <h1>📚 Online Book Store 📚</h1>
   <p>Deployed: <a href="https://bookstore-bookstore.azuremicroservices.io/">HERE</a></p>
@@ -7,6 +9,7 @@
     <a href="https://github.com/JulianJekov/OnlineBookStore/issues">Request Feature</a>
   </p>
 </div>
+
 <details>
   <summary>📑 Table of Contents</summary>
   <ol>
@@ -25,16 +28,18 @@
     </li>
     <li><a href="#usage">Usage</a></li>
   </ol>
-  </ol>
 </details>
+
 ## 🚀 Getting Started
 <p>To get started with the Online Book Store project, follow these steps:</p>
-📋 ### Prerequisites
+
+### 📋 Prerequisites
 <ul>
   <li>JDK 17+</li>
   <li>Apache Maven 3.6+</li>
   <li>MySQL</li>
 </ul>
+
 ### 🛠 Installation
 <p>To install and run the Online Book Store application:</p>
 <ol>
@@ -45,16 +50,16 @@
   <pre><code>mvn clean install</code></pre>
   <pre><code>mvn spring-boot:run</code></pre>
 </ol>
-🔧 ### Setting Environment Variables
 
-<p>Before starting the application, set up the following environment variables ${MYYSQL_PORT}, ${MYSQL_USER}.. etc... in your application.properties or application.yml:</p>
+### 🔧 Setting Environment Variables
+<p>Before starting the application, set up the following environment variables ${MYSQL_PORT}, ${MYSQL_USER}.. etc... in your application.properties or application.yml:</p>
 
 ```yaml
-    datasource:
-        driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/book-store?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
-        password: ${DB_PASSWORD}
-        username: ${DB_USERNAME}
+datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/book-store?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
+    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME}
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 📖 ### About The Project
