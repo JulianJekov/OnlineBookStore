@@ -25,6 +25,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                         FROM (SELECT AVG(r.rating) AS avg_rating
                         FROM reviews r
                         GROUP BY r.book_id) AS avg_ratings)
+                        ORDER BY b.id DESC
                         LIMIT 1
                         """,
             nativeQuery = true)
