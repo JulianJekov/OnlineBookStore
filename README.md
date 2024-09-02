@@ -1,5 +1,4 @@
 <a name="readme-top"></a>
-# 📚 Online Book Store 📚
 
 <div align="center">
   <h1>📚 Online Book Store 📚</h1>
