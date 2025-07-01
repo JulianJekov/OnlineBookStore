@@ -2,7 +2,7 @@
 
 <div align="center">
   <h1>📚 Online Book Store 📚</h1>
-  <p>Deployed: <a href="https://bookstore-bookstore.azuremicroservices.io/">HERE</a></p>
+<!--   <p>Deployed: <a href="https://bookstore-bookstore.azuremicroservices.io/">HERE</a></p> -->
   <p>
     <a href="https://github.com/JulianJekov/OnlineBookStore/issues">Report Bug</a>
     ·
